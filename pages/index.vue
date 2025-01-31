@@ -2,6 +2,7 @@
   <VCard rounded="xl" class="ma-4 card-height">
     <div>
       <NewDeck ref="newDeck" />
+      <ListDeck ref="listDeck" />
     </div>
     <VCardActions class="justify-end">
       <VBtn
