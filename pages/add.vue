@@ -5,7 +5,7 @@ definePageMeta({
 </script>
 
 <template>
-  <v-card rounded="0" height="100%">
+  <v-card rounded="0" height="100%" class="bg-card">
     <v-toolbar>
       <v-btn icon="mdi-arrow-left"></v-btn>
 
@@ -15,6 +15,10 @@ definePageMeta({
         <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
       </v-toolbar-items>
     </v-toolbar>
+
+    <div class="pa-2">
+      <SumaryCard />
+    </div>
     <div class="grid">
       <NoCards />
     </div>
@@ -28,5 +32,8 @@ definePageMeta({
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+.bg-card {
+  background: #0f0f0f;
 }
 </style>
