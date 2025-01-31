@@ -1,5 +1,5 @@
 <template>
-  <v-app hei>
+  <v-app>
     <AppBar />
     <VMain>
       <slot />
