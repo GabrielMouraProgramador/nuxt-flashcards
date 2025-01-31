@@ -1,0 +1,44 @@
+
+#table-product-register .v-table__wrapper{
+  overflow: auto;
+    flex: 1 1 auto;
+    border: solid 1px #C2C2C2;
+    border-radius: 5px !important;
+}
+
+#table-product-register  table {
+  border-radius: 5px;
+
+  overflow: hidden;
+  background-color: #FFFFFF;
+}
+#table-product-register  th {
+  
+  font-size: 18px;
+  text-align: center !important;
+
+  padding: 4px 2px !important;
+  height: 0px !important;
+}
+#table-product-register  td {
+  border-left: 0.5px solid #C2C2C2 !important; 
+  font-size: 18px;
+  text-align: center !important;
+
+  padding: 4px 2px !important;
+  height: 0px !important;
+}
+#table-product-register  tr {
+  
+  font-size: 18px;
+  text-align: center !important;
+
+  padding: 4px 2px !important;
+  height: 0px !important;
+}
+
+
+#table-product-register  thead {
+  background-color: #e8e8e8;
+
+}
