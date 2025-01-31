@@ -18,6 +18,7 @@ definePageMeta({
     <div class="grid">
       <NoCards />
     </div>
+    <AddCard />
   </v-card>
 </template>
 <style scoped>
