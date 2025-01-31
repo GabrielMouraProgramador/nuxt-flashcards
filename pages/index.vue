@@ -1,8 +1,16 @@
 <template>
   <VCard rounded="xl" class="ma-4 card-height">
-    teste
+    <div>
+      <NewDeck ref="newDeck" />
+    </div>
     <VCardActions class="justify-end">
-      <VBtn color="primary" icon="mdi-plus" variant="flat" class="ma-2"> </VBtn>
+      <VBtn
+        color="primary"
+        icon="mdi-plus"
+        variant="flat"
+        class="ma-2"
+        @click="$refs.newDeck.sheet = true"
+      ></VBtn>
     </VCardActions>
   </VCard>
 </template>
@@ -13,6 +21,13 @@ import { Pencil } from "lucide-vue-next";
 export default {
   components: {
     Pencil,
+  },
+  data() {
+    return {
+      actions: {
+        sheetAdd: false,
+      },
+    };
   },
 };
 </script>
