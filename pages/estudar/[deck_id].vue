@@ -61,7 +61,7 @@ export default {
         if (this.next) {
           this.$refs.dificuldade.sheet = true;
         }
-      }, "4000");
+      }, "1000");
     },
     nextCatd() {
       this.$refs.dificuldade.sheet = false;
