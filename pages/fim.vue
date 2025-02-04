@@ -5,9 +5,8 @@
       <h3 class="my-2 text">Incrivel, voce revisou os 02 cartões hoje!</h3>
       <p class="mode text">Nao demore muito para voltar :)</p>
     </div>
-    <div class="d-flex pa-5 mb-5">
+    <div @click="$router.push('/')" class="d-flex pa-5 mb-5">
       <VBtn
-        to="/"
         class="ma-auto mt-5"
         size="large"
         variant="tonal"
