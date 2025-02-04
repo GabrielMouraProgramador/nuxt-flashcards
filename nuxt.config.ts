@@ -10,11 +10,17 @@ export default defineNuxtConfig({
     '@nuxtjs/pwa',
   ],
   pwa: {
-    icon: false, // disables the icon module
+    icon: true, // disables the icon module
     manifest: {
-      name: 'My Awesome App',
-      lang: 'fa',
-      useWebmanifestExtension: false
+      useWebmanifestExtension: false,
+      lang: 'pt-br',
+      name: "flashcard",
+      theme_color: "#cf3a3a",
+      background_color: "#e32222",
+      short_name: "flashcard",
+      categories: [
+        "education"
+      ]
     }
   
 
