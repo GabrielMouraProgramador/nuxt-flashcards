@@ -21,6 +21,7 @@
     "vue-router": "latest"
   },
   "devDependencies": {
+    "@nuxtjs/pwa": "^3.3.5",
     "vite-plugin-vuetify": "^2.0.4",
     "vuetify": "^3.7.9"
   }

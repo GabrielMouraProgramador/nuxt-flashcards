@@ -6,6 +6,19 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  buildModules: [
+    '@nuxtjs/pwa',
+  ],
+  pwa: {
+    icon: false, // disables the icon module
+    manifest: {
+      name: 'My Awesome App',
+      lang: 'fa',
+      useWebmanifestExtension: false
+    }
+  
+
+  },
   vite: {
     optimizeDeps: {
       include: ['@supabase/gotrue-js']
