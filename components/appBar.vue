@@ -5,7 +5,7 @@
     </template>
 
     <div class="d-flex">
-      <VBtn variant="flat" color="primary" rounded="xl"> NOVA DECK </VBtn>
+      <VBtn variant="flat" color="primary" size="small" rounded="xl"> NOVA DECK </VBtn>
     </div>
 
     <template v-slot:append>
