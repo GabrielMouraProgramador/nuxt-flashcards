@@ -19,7 +19,14 @@
             variant="solo-filled"
           ></v-text-field>
 
-          <VBtn block color="primary" :disabled="!name" @click="newDeck" size="50">
+          <VBtn
+            block
+            color="primary"
+            :loading="loading"
+            :disabled="!name"
+            @click="newDeck"
+            size="50"
+          >
             Criar novo deck</VBtn
           >
         </VCardText>
@@ -34,12 +41,14 @@ export default {
     return {
       name: "",
       sheet: false,
+      loading: false,
       decks: [],
     };
   },
 
   methods: {
     async newDeck() {
+      this.loading = true;
       const { addDeck } = useDeck();
       if (this.name) {
         await addDeck(this.name);
@@ -47,6 +56,7 @@ export default {
         this.name = "";
         this.$emit("refresh");
       }
+      this.loading = false;
     },
   },
 };

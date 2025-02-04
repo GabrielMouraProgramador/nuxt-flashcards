@@ -1,3 +1,11 @@
 {
-    "vue3snippets.enable-compile-vue-file-on-did-save-code": true
+  "[typescript]": {
+    "editor.defaultFormatter": "denoland.vscode-deno"
+  },
+  "deno.enablePaths": [
+    "supabase/functions"
+  ],
+  "deno.lint": true,
+  "deno.unstable": true,
+  "vue3snippets.enable-compile-vue-file-on-did-save-code": true
 }
