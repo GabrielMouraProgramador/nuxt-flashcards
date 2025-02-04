@@ -4,9 +4,8 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   //...
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify', '@nuxtjs/pwa'],
   },
-
   pwa: {
     workbox: {
       // Ativa o service worker personalizado
@@ -479,7 +478,8 @@ export default defineNuxtConfig({
       include: ['@supabase/gotrue-js']
     }
   },
-  modules: ["@nuxtjs/pwa","@nuxtjs/supabase"],
+
+  modules: ["@nuxtjs/supabase"],
   supabase: {
     redirect: false,
     cookieOptions: {
