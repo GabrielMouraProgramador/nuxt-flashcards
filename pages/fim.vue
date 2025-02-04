@@ -7,13 +7,13 @@
     </div>
     <div class="d-flex pa-5 mb-5">
       <VBtn
+        to="/"
         class="ma-auto mt-5"
         size="large"
         variant="tonal"
         block
         color="success"
         readonly="lg"
-        to="/"
         >Continuar
       </VBtn>
     </div>
