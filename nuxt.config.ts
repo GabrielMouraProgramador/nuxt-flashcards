@@ -6,5 +6,37 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
+  vite: {
+    optimizeDeps: {
+      include: ['@supabase/gotrue-js']
+    }
+  },
+  modules: ["@nuxtjs/supabase"],
+  supabase: {
+    redirect: false,
+    cookieOptions: {
+      maxAge: 60 * 60 * 8,
+      sameSite:false,    
+      secure:false 
+    },
+    redirectOptions: {
+      login: '/auth/login',
+      callback: '/',
+      include: undefined,
+      exclude: [],
+      cookieRedirect: true
+    }
+  },
+  app: {
+    head: {
+      htmlAttrs: {
+        lang: 'pt-BR',
+      },
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+    },
+  },
   
 })
