@@ -23,7 +23,15 @@
         <p class="descricao">Para revisar</p>
       </div>
     </div>
-    <VBtn rounded="lg" class="mt-5" block variant="flat" color="#73c8ff" size="50">
+    <VBtn
+      :to="`/estudar/${$route.params.deck_id}`"
+      rounded="lg"
+      class="mt-5"
+      block
+      variant="flat"
+      color="#73c8ff"
+      size="50"
+    >
       <b>Estudar cartões</b></VBtn
     >
   </VCard>
