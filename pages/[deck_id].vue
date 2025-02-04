@@ -16,7 +16,7 @@ definePageMeta({
       </v-toolbar-items>
     </v-toolbar>
 
-    <div v-if="cards.length > 0" class="pa-2">
+    <div v-if="cards.length" class="pa-2">
       <SumaryCard :info="info" :cards="cards" />
       <CardProgress />
       <ListCard :cards="cards" />
@@ -30,27 +30,22 @@ definePageMeta({
 
 <script>
 export default {
-  data: () => ({
-    cards: [],
-    info: {},
-  }),
+  data() {
+    return {
+      cards: [],
+      info: {},
+    };
+  },
   async created() {
     if (this.$route.params.deck_id) {
       this.refresh();
     }
   },
+
   methods: {
     async refresh() {
-      try {
-        const [cards, deckInfo] = await Promise.all([
-          this.allCards(),
-          this.getInfoDeck(),
-        ]);
-        this.cards = cards;
-        this.info = deckInfo;
-      } catch (error) {
-        console.error("Erro ao buscar dados:", error);
-      }
+      this.cards = this.allCards();
+      this.info = this.getInfoDeck();
     },
     async allCards() {
       const { getCardsDeck } = useDeck();

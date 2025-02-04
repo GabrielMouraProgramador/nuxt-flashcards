@@ -13,6 +13,7 @@
         block
         color="success"
         readonly="lg"
+        to="/"
         >Continuar
       </VBtn>
     </div>

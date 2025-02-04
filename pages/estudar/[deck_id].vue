@@ -19,7 +19,13 @@ definePageMeta({
     </v-toolbar>
 
     <VCard rounded="xl" class="pa-4 m-4 bg-card">
-      <FlipCard @next="liberaDificuldade()" :frete="frete" :tras="tras" class="mb-flip" />
+      <FlipCard
+        ref="flip"
+        @next="liberaDificuldade()"
+        :frete="frete"
+        :tras="tras"
+        class="mb-flip"
+      />
       <Dificuldade @nextCard="nextCatd" ref="dificuldade" />
       <div class="d-flex justify-end">
         <VBtn v-if="next" @click="$refs.dificuldade.sheet = true"> PROXIMO</VBtn>
@@ -66,6 +72,7 @@ export default {
     nextCatd() {
       this.$refs.dificuldade.sheet = false;
       this.next = false;
+      this.$refs.flip.rotate = false;
 
       if (this.atual + 1 == this.cards.length) {
         this.$router.push("/fim");
