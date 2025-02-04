@@ -6,10 +6,13 @@ export default defineNuxtConfig({
   build: {
     transpile: ['vuetify'],
   },
-  buildModules: [
-    '@nuxtjs/pwa',
-  ],
+
   pwa: {
+    workbox: {
+      // Ativa o service worker personalizado
+      dev: process.env.NODE_ENV === 'development', // Apenas em desenvolvimento, se desejar
+      swPath: '/service-worker.js', // Caminho para o arquivo service-worker.js
+    },
     manifest: {
       name: "flashcard",
       short_name: "flashcard",
@@ -476,7 +479,7 @@ export default defineNuxtConfig({
       include: ['@supabase/gotrue-js']
     }
   },
-  modules: ["@nuxtjs/supabase"],
+  modules: ["@nuxtjs/pwa","@nuxtjs/supabase"],
   supabase: {
     redirect: false,
     cookieOptions: {
