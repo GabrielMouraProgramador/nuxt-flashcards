@@ -1,15 +1,16 @@
 <template>
   <VCard rounded="xl" class="pa-4 bg-card mt-4">
-    <span class="title">R</span>
+    <span class="title">{{ info?.name }}</span>
+
     <br />
     <span class="mode">Modo de aprendizado: <span>Repetição espaçada geral</span></span>
     <h3 class="my-2">Cartões para hoje</h3>
     <div class="d-flex bg-grid">
-      <div class="total-cards">2</div>
+      <div class="total-cards">{{ cards ? cards.length : 0 }}</div>
       <div class="mx-4 center">
         <div class="d-flex">
           <VIcon size="35" color="#6f6e6c" class="mr-1">mdi-cards-playing-outline</VIcon>
-          <p class="n-estudado">2</p>
+          <p class="n-estudado">0</p>
         </div>
         <p class="descricao">Não estudado</p>
       </div>
@@ -27,6 +28,11 @@
     >
   </VCard>
 </template>
+<script>
+export default {
+  props: ["info", "cards"],
+};
+</script>
 <style scoped>
 .title {
   font-size: 16px;
