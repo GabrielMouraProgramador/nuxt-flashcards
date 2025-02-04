@@ -17,7 +17,7 @@ definePageMeta({
         <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
       </v-toolbar-items>
     </v-toolbar>
-    {{ cards }}
+
     <VCard rounded="xl" class="pa-4 m-4 bg-card">
       <FlipCard @next="liberaDificuldade()" :frete="frete" :tras="tras" class="mb-flip" />
       <Dificuldade @nextCard="nextCatd" ref="dificuldade" />
@@ -66,6 +66,10 @@ export default {
     nextCatd() {
       this.$refs.dificuldade.sheet = false;
       this.next = false;
+
+      if (this.atual + 1 == this.cards.length) {
+        this.$router.push("/fim");
+      }
       this.atual++;
     },
     async allCards() {
