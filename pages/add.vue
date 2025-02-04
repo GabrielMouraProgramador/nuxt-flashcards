@@ -18,8 +18,10 @@ definePageMeta({
 
     <div class="pa-2">
       <SumaryCard />
+      <CardProgress />
+      <ListCard />
     </div>
-    <div class="grid">
+    <div class="grid d-none">
       <NoCards />
     </div>
     <AddCard />
