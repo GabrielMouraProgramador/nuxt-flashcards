@@ -11,13 +11,17 @@
             <b>Crie seu próprio deck.</b>
             Você obtém os melhore resultados com os cartões que você mesmo cria.
           </p>
+
           <v-text-field
+            v-model="name"
             class="my-2"
             density="comfortable"
             variant="solo-filled"
           ></v-text-field>
 
-          <VBtn block color="primary" size="50"> Criar novo deck</VBtn>
+          <VBtn block color="primary" :disabled="!name" @click="newDeck" size="50">
+            Criar novo deck</VBtn
+          >
         </VCardText>
       </v-card>
     </v-bottom-sheet>
@@ -28,8 +32,22 @@
 export default {
   data() {
     return {
+      name: "",
       sheet: false,
+      decks: [],
     };
+  },
+
+  methods: {
+    async newDeck() {
+      const { addDeck } = useDeck();
+      if (this.name) {
+        await addDeck(this.name);
+        this.sheet = false;
+        this.name = "";
+        this.$emit("refresh");
+      }
+    },
   },
 };
 </script>

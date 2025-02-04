@@ -3,9 +3,9 @@
     <div v-for="deck in deckList" :key="deck.title">
       <v-list-item
         :v-for="deck in deckList"
-        :key="deck.title"
-        :subtitle="deck.subtitle"
-        :title="deck.title"
+        :key="deck.name"
+        :subtitle="useFormat.date(deck.created_at)"
+        :title="deck.name"
       >
         <template v-slot:append>
           <v-btn color="grey-lighten-1" icon="mdi-chevron-right" variant="text"></v-btn>
@@ -18,20 +18,16 @@
 <script>
 export default {
   data: () => ({
-    deckList: [
-      {
-        subtitle: "Jan 9, 2014",
-        title: "Photos",
-      },
-      {
-        subtitle: "Jan 17, 2014",
-        title: "Recipes",
-      },
-      {
-        subtitle: "Jan 28, 2014",
-        title: "Work",
-      },
-    ],
+    deckList: [],
   }),
+  mounted() {
+    this.allDecks();
+  },
+  methods: {
+    async allDecks() {
+      const { getAllDecks } = useDeck();
+      this.deckList = await getAllDecks();
+    },
+  },
 };
 </script>

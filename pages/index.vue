@@ -1,7 +1,7 @@
 <template>
   <VCard rounded="xl" class="ma-4 card-height">
     <div>
-      <NewDeck ref="newDeck" />
+      <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
       <ListDeck ref="listDeck" />
     </div>
     <VCardActions class="justify-end">
@@ -29,6 +29,11 @@ export default {
         sheetAdd: false,
       },
     };
+  },
+  methods: {
+    teste() {
+      alert("aqui");
+    },
   },
 };
 </script>
