@@ -43,13 +43,13 @@ export default {
   }),
   computed: {
     frete() {
-      if (this.cards && this.cards.length > 0 && this.cards.length < this.atual) {
+      if (this.cards && this.cards.length > 0 && this.cards.length > this.atual) {
         return this.cards[this.atual]["frete"];
       }
-      return;
+      return "--";
     },
     tras() {
-      if (this.cards && this.cards.length > 0 && this.cards.length < this.atual) {
+      if (this.cards && this.cards.length > 0 && this.cards.length > this.atual) {
         return this.cards[this.atual]["tras"];
       }
       return;
