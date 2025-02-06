@@ -1,9 +1,7 @@
 <template>
   <v-app>
     <AppBar />
-    <VMain>
-      <slot />
-    </VMain>
+    <slot />
     <NavBar />
   </v-app>
 </template>
