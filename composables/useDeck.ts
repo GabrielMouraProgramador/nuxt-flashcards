@@ -30,7 +30,30 @@ export function useDeck() {
         throw new Error(err.message); 
       }
     }
+    async function renameDeck(deck_id: string, newName:string): Promise<any> {
+      try {
+        const { data, error } = await supabase.from('deck').update({ name: newName }).eq('id',deck_id)
+     
+        if ( error) {
+          throw new Error(error.message);
+        }
+        return data
     
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
+    async function deleteDeck(deck_id: string, newName:string): Promise<any> {
+      try {
+        await supabase.from('deck').delete().eq('id',deck_id)
+        await supabase.from('cards').delete().eq('deck_id',deck_id)
+
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
+
     async function getAllDecks(): Promise<any> {
         try {
           const { data, error } = await supabase.from('deck').select()
@@ -78,6 +101,8 @@ export function useDeck() {
       getCardsDeck,
       addCard,
       getDeckById,
+      renameDeck,
+      deleteDeck
     };
   }
   

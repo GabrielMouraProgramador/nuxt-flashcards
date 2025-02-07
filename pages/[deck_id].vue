@@ -23,6 +23,7 @@ definePageMeta({
 
         <CardProgress />
         <ListCard :cards="cards" />
+        <RenameDeck />
       </div>
       <div v-else class="grid">
         <NoCards @clicked="$refs.addcard.dialog = true" />

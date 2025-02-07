@@ -7,10 +7,11 @@
     </template>
 
     <v-card class="mx-auto mt-2 mr-2 bg-card elevation-9" rounded="xl" width="300">
-      <v-list class="bg-card" disabled>
+      {{ selected }}
+      <v-list v-model="selected" class="bg-card" disabled>
         <v-list-subheader>AÇÕES</v-list-subheader>
 
-        <v-list-item v-for="(item, i) in items" :key="i" @click="acao(item)">
+        <v-list-item v-for="item in items" :value="item.text" :key="item.text">
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
           </template>
@@ -29,13 +30,14 @@ export default {
     menu: false,
     message: false,
     hints: true,
+    selected: null,
     items: [
       { text: "Renomear ", icon: "mdi-rename" },
       { text: "Apagar ", icon: "mdi-delete" },
     ],
   }),
   methods: {
-    acao(item) {
+    setAcao(item) {
       console.log(item);
     },
   },
