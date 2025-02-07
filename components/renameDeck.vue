@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       newName: "",
-      sheet: true,
+      sheet: false,
       loading: false,
       decks: [],
     };

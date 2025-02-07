@@ -1,11 +1,9 @@
 <template>
-  <VSnackbar v-model="snackbar.active" timeout="2500">
+  <VSnackbar v-model="snackbar.active" color="#201c1d" class="mb-5" timeout="2500">
     {{ snackbar.text }}
     <template v-slot:actions>
-      <VBtn color="warning" variant="text" @click="snackbar.active = false">
-        CANCELAR
-      </VBtn>
-      <VBtn prepend-icon="mdi-delete" color="red" variant="text" @click="detele()">
+      <VBtn color="" variant="text" @click="snackbar.active = false"> CANCELAR </VBtn>
+      <VBtn prepend-icon="mdi-delete" color="error" variant="text" @click="detele()">
         APAGAR
       </VBtn>
     </template>
@@ -32,7 +30,7 @@ export default {
       };
     },
     detele() {
-      this.$emit("detele", this.snackbar.value);
+      this.$emit("delete", this.snackbar.value);
       this.snackbar = {
         active: false,
         text: "",

@@ -43,7 +43,7 @@ export function useDeck() {
         throw new Error(err.message); 
       }
     }
-    async function deleteDeck(deck_id: string, newName:string): Promise<any> {
+    async function deleteDeck(deck_id: string): Promise<any> {
       try {
         await supabase.from('deck').delete().eq('id',deck_id)
         await supabase.from('cards').delete().eq('deck_id',deck_id)

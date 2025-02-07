@@ -14,7 +14,7 @@ definePageMeta({
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <MenuDeck />
+        <Menu @clicked="clickedMenuDeck" ref="menuDeck" />
       </v-toolbar-items>
     </v-toolbar>
     <div v-if="!loading">
@@ -23,7 +23,6 @@ definePageMeta({
 
         <CardProgress />
         <ListCard :cards="cards" />
-        <RenameDeck />
       </div>
       <div v-else class="grid">
         <NoCards @clicked="$refs.addcard.dialog = true" />
@@ -35,6 +34,8 @@ definePageMeta({
         type="list-item-two-line, image, table-tfoot"
       ></v-skeleton-loader>
     </VCard>
+    <RenameDeck ref="renameDeck" />
+    <ConfirmDelete ref="confirmDelete" @delete="deteleDeck" />
   </v-card>
 </template>
 
@@ -45,7 +46,14 @@ export default {
       cards: [],
       info: {},
       loading: true,
+      menuDeck: [
+        { text: "Renomear", icon: "mdi-rename" },
+        { text: "Apagar", icon: "mdi-delete" },
+      ],
     };
+  },
+  mounted() {
+    this.$refs.menuDeck.items = this.menuDeck;
   },
   async created() {
     if (this.$route.params.deck_id) {
@@ -54,6 +62,24 @@ export default {
   },
 
   methods: {
+    async deteleDeck(deck_id) {
+      const { deleteDeck } = useDeck();
+      await deleteDeck(deck_id);
+      this.$router.push("/");
+    },
+    clickedMenuDeck(funcaoName) {
+      if (funcaoName == "Renomear") {
+        this.$refs.renameDeck.sheet = true;
+        this.refresh();
+      }
+
+      if (funcaoName == "Apagar") {
+        this.$refs.confirmDelete.confirmDelete(
+          this.$route.params.deck_id,
+          "DECK " + this.info?.name
+        );
+      }
+    },
     async refresh() {
       this.cards = await this.allCards();
       this.info = await this.getInfoDeck();
