@@ -2,7 +2,7 @@
   <v-app>
     <AppBar />
     <slot />
-    <NavBar />
+    <!-- <NavBar /> -->
   </v-app>
 </template>
 <style>

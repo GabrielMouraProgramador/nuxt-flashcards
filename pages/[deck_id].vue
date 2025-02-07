@@ -6,25 +6,34 @@ definePageMeta({
 
 <template>
   <v-card rounded="0" height="100%" class="bg-card">
-    <v-toolbar>
-      <v-btn to="/" icon="mdi-arrow-left"></v-btn>
+    <v-toolbar density="compact" color="#201c1d">
+      <v-btn to="/">
+        <VIcon size="25">mdi-arrow-left</VIcon>
+      </v-btn>
 
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+        <MenuDeck />
       </v-toolbar-items>
     </v-toolbar>
+    <div v-if="!loading">
+      <div v-if="cards && cards.length" class="pa-2">
+        <SumaryCard :info="info" :cards="cards" />
 
-    <div v-if="cards.length" class="pa-2">
-      <SumaryCard :info="info" :cards="cards" />
-      <CardProgress />
-      <ListCard :cards="cards" />
+        <CardProgress />
+        <ListCard :cards="cards" />
+      </div>
+      <div v-else class="grid">
+        <NoCards @clicked="$refs.addcard.dialog = true" />
+      </div>
+      <AddCard @refresh="refresh()" ref="addcard" />
     </div>
-    <div v-else class="grid">
-      <NoCards @clicked="$refs.addcard.dialog = true" />
-    </div>
-    <AddCard @refresh="refresh()" ref="addcard" />
+    <VCard v-else rounded="xl" class="ma-2 mt-5">
+      <v-skeleton-loader
+        type="list-item-two-line, image, table-tfoot"
+      ></v-skeleton-loader>
+    </VCard>
   </v-card>
 </template>
 
@@ -34,6 +43,7 @@ export default {
     return {
       cards: [],
       info: {},
+      loading: true,
     };
   },
   async created() {
@@ -44,16 +54,17 @@ export default {
 
   methods: {
     async refresh() {
-      this.cards = this.allCards();
-      this.info = this.getInfoDeck();
+      this.cards = await this.allCards();
+      this.info = await this.getInfoDeck();
+      this.loading = false;
     },
     async allCards() {
       const { getCardsDeck } = useDeck();
-      this.cards = await getCardsDeck(this.$route.params.deck_id);
+      return await getCardsDeck(this.$route.params.deck_id);
     },
     async getInfoDeck() {
       const { getDeckById } = useDeck();
-      this.info = await getDeckById(this.$route.params.deck_id);
+      return await getDeckById(this.$route.params.deck_id);
     },
   },
 };

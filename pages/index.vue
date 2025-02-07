@@ -4,7 +4,6 @@
       <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
       <ListDeck ref="listDeck" />
     </div>
-
     <VBtn
       color="primary"
       icon="mdi-plus"

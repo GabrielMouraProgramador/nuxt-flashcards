@@ -16,10 +16,10 @@ export default defineNuxtConfig({
       "lang": "pt",
       "start_url": "/",
       "display": "fullscreen",
-      "background_color": "#ffffff",
-      "theme_color": "#ffffff",
+      "background_color": "#201c1d",
+      "theme_color": "#201c1d",
       "short_name": "FlashCards",
-      "id": "TYRES",
+      "id": "FlashCards",
       "description": "",
       "categories": [
         "business",

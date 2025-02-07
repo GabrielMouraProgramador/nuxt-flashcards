@@ -1,7 +1,9 @@
 <template>
   <v-app-bar density="compact">
     <template v-slot:prepend>
-      <v-app-bar-nav-icon></v-app-bar-nav-icon>
+      <v-btn>
+        <VIcon size="25"> mdi-menu </VIcon>
+      </v-btn>
     </template>
 
     <div class="d-flex">

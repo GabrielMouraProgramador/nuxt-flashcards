@@ -34,6 +34,7 @@
           class="mt-5"
           block
           color="success"
+          :loading="loading"
           variant="tonal"
           size="50"
         >
@@ -50,6 +51,7 @@ export default {
     dialog: false,
     frete: "",
     tras: "",
+    loading: false,
   }),
 
   methods: {
@@ -60,8 +62,9 @@ export default {
         frete: this.frete,
         tras: this.tras,
       };
+      this.loading = true;
       this.deck = await addCard(data);
-
+      this.loading = false;
       this.frete = "";
       this.tras = "";
       this.$emit("refresh");
