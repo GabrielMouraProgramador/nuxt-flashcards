@@ -1,13 +1,41 @@
 <template>
-  <VSnackbar v-model="snackbar.active" color="#201c1d" class="mb-5" timeout="2500">
-    {{ snackbar.text }}
-    <template v-slot:actions>
-      <VBtn color="" variant="text" @click="snackbar.active = false"> CANCELAR </VBtn>
-      <VBtn prepend-icon="mdi-delete" color="error" variant="text" @click="detele()">
-        APAGAR
-      </VBtn>
-    </template>
-  </VSnackbar>
+  <v-bottom-sheet v-model="snackbar.active">
+    <v-card height="200" class="rounded-t-xl">
+      <div class="d-flex justify-space-between pa-2">
+        <b class="w-100 text-center">Confirmação de exclusão </b>
+      </div>
+
+      <VCardText>
+        <p>
+          <b> {{ snackbar.text }}</b>
+          Os dados excluídos serão apagados permanentemente e não poderão ser recuperados.
+        </p>
+        <div class="d-flex mt-4">
+          <VBtn
+            width="50%"
+            class="mr-1"
+            color=""
+            height="50"
+            variant="tonal"
+            @click="snackbar.active = false"
+          >
+            CANCELAR
+          </VBtn>
+          <VBtn
+            width="50%"
+            class="ml-1"
+            prepend-icon="mdi-delete"
+            color="error"
+            height="50"
+            variant="tonal"
+            @click="detele()"
+          >
+            APAGAR
+          </VBtn>
+        </div>
+      </VCardText>
+    </v-card>
+  </v-bottom-sheet>
 </template>
 
 <script>
