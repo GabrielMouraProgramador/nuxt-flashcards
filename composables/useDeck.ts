@@ -53,6 +53,16 @@ export function useDeck() {
         throw new Error(err.message); 
       }
     }
+    async function deleteCard(card_id: string): Promise<any> {
+      try {
+        await supabase.from('cards').delete().eq('id',card_id)
+
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
+
 
     async function getAllDecks(): Promise<any> {
         try {
@@ -94,6 +104,20 @@ export function useDeck() {
           throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
         }
       }
+      async function updateCard(data: any): Promise<void> {
+        try {
+          const {id_card,frete,tras } = data;
+
+          const { error } = await supabase.from('cards').update({ frete,tras  }).eq('id', id_card);
+  
+          if (error) {
+            throw new Error(error.message);
+          }
+        } catch (err: any) {
+  
+          throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
+        }
+      }
   
     return {
       addDeck,
@@ -102,7 +126,9 @@ export function useDeck() {
       addCard,
       getDeckById,
       renameDeck,
-      deleteDeck
+      deleteDeck,
+      deleteCard,
+      updateCard
     };
   }
   

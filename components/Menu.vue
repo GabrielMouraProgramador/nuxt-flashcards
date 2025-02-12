@@ -29,6 +29,7 @@
 
 <script>
 export default {
+  props: ["itemsMenu", "item"],
   data() {
     return {
       fav: true,
@@ -36,12 +37,15 @@ export default {
       message: false,
       hints: true,
       selected: null,
-      items: [],
+      items: this.itemsMenu || [],
     };
   },
   methods: {
     setAcao(item) {
-      this.$emit("clicked", item.text);
+      this.$emit(
+        "clicked",
+        this.item != undefined ? { text: item.text, item: this.item } : item.text
+      );
     },
   },
 };

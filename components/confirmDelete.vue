@@ -7,7 +7,8 @@
 
       <VCardText>
         <p>
-          <b> {{ snackbar.text }}</b>
+          <b> {{ snackbar.text }}</b
+          ><br />
           Os dados excluídos serão apagados permanentemente e não poderão ser recuperados.
         </p>
         <div class="d-flex mt-4">

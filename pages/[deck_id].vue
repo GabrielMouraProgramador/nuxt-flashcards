@@ -14,7 +14,7 @@ definePageMeta({
       <v-spacer></v-spacer>
 
       <v-toolbar-items>
-        <Menu @clicked="clickedMenuDeck" ref="menuDeck" />
+        <Menu @clicked="clickedMenuDeck" :itemsMenu="menuDeck" ref="menuDeck" />
       </v-toolbar-items>
     </v-toolbar>
     <div v-if="!loading">
@@ -22,7 +22,7 @@ definePageMeta({
         <SumaryCard :info="info" :cards="cards" />
 
         <CardProgress />
-        <ListCard :cards="cards" />
+        <ListCard @refresh="refresh()"  :cards="cards" />
       </div>
       <div v-else class="grid">
         <NoCards @clicked="$refs.addcard.dialog = true" />
@@ -47,14 +47,13 @@ export default {
       info: {},
       loading: true,
       menuDeck: [
+        { text: "Novo Card", icon: "mdi-plus" },
         { text: "Renomear", icon: "mdi-rename" },
         { text: "Apagar", icon: "mdi-delete" },
       ],
     };
   },
-  mounted() {
-    this.$refs.menuDeck.items = this.menuDeck;
-  },
+
   async created() {
     if (this.$route.params.deck_id) {
       this.refresh();
@@ -68,6 +67,10 @@ export default {
       this.$router.push("/");
     },
     clickedMenuDeck(funcaoName) {
+      if (funcaoName == "Novo Card") {
+        this.$refs.addcard.dialog = true;
+      }
+
       if (funcaoName == "Renomear") {
         this.$refs.renameDeck.sheet = true;
         this.refresh();
