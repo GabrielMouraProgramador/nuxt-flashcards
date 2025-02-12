@@ -6,8 +6,10 @@ definePageMeta({
 
 <template>
   <v-card rounded="0" height="100%" class="bg-page">
-    <v-toolbar>
-      <v-btn icon="mdi-close"></v-btn>
+    <v-toolbar density="compact" color="#201c1d">
+      <v-btn to="/">
+        <VIcon size="25">mdi-close</VIcon>
+      </v-btn>
 
       <v-spacer></v-spacer>
       <VChip size="small">{{ atual }}/{{ cards.length }}</VChip>
