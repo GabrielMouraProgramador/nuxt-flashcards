@@ -62,8 +62,6 @@ export function useDeck() {
         throw new Error(err.message); 
       }
     }
-
-
     async function getAllDecks(): Promise<any> {
         try {
           const { data, error } = await supabase.from('deck').select()
@@ -77,48 +75,59 @@ export function useDeck() {
           throw new Error(err.message); 
         }
       }
-      async function getDeckById(deck_id:string): Promise<any> {
-        try {
-          const { data, error } = await supabase.from('deck').select().eq('id',deck_id)
-       
-          if ( error) {
-            throw new Error(error.message);
-          }
-          return data[0]
+    async function getDeckById(deck_id:string): Promise<any> {
+      try {
+        const { data, error } = await supabase.from('deck').select().eq('id',deck_id)
       
-        } catch (err: any) {
-          throw new Error(err.message); 
+        if ( error) {
+          throw new Error(error.message);
         }
+        return data[0]
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
       }
-      async function addCard(data: any): Promise<void> {
-        try {
-          const {deck_id,frete,tras } = data;
+    }
+    async function addCard(data: any): Promise<void> {
+      try {
+        const {deck_id,frete,tras } = data;
 
-          const { error } = await supabase.from('cards').insert({ deck_id,frete,tras  });
-  
-          if (error) {
-            throw new Error(error.message);
-          }
-        } catch (err: any) {
-  
-          throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
-        }
-      }
-      async function updateCard(data: any): Promise<void> {
-        try {
-          const {id_card,frete,tras } = data;
+        const { error } = await supabase.from('cards').insert({ deck_id,frete,tras  });
 
-          const { error } = await supabase.from('cards').update({ frete,tras  }).eq('id', id_card);
-  
-          if (error) {
-            throw new Error(error.message);
-          }
-        } catch (err: any) {
-  
-          throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
+        if (error) {
+          throw new Error(error.message);
         }
+      } catch (err: any) {
+
+        throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
       }
-  
+    }
+    async function updateCard(data: any): Promise<void> {
+      try {
+        const {id_card,frete,tras } = data;
+
+        const { error } = await supabase.from('cards').update({ frete,tras  }).eq('id', id_card);
+
+        if (error) {
+          throw new Error(error.message);
+        }
+      } catch (err: any) {
+
+        throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
+      }
+    }
+    async function setDifficultyCard(data: any): Promise<any> {
+      try {
+        const {difficulty,next_game,time,card_id } = data;
+
+        const { error } = await supabase.from('cards').update({ difficulty,next_game,ultimo_tempo:time }).eq('id', card_id);
+
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
+
     return {
       addDeck,
       getAllDecks,
@@ -128,7 +137,8 @@ export function useDeck() {
       renameDeck,
       deleteDeck,
       deleteCard,
-      updateCard
+      updateCard,
+      setDifficultyCard
     };
   }
   

@@ -3,39 +3,40 @@
     <v-card class="rounded-t-xl">
       <div class="d-flex justify-space-between pa-2">
         <b class="w-100 text-center">Dificuldade do card </b>
+        {{ agora }}
       </div>
       <VCardText class="d-flex ga-2 height">
         <VCard
-          @click="setDificuldade()"
+          @click="setDificuldade({ dificuldade: 'agora', time: agora })"
           rounded="lg"
           class="m-4 d-novo d-flex flex-column justify-center"
         >
           <p>De novo</p>
-          <span>agora</span>
+          <span>{{ agora }}</span>
         </VCard>
         <VCard
-          @click="setDificuldade()"
+          @click="setDificuldade({ dificuldade: 'Dificil', time: dificil })"
           rounded="lg"
           class="m-4 d-dificil d-flex flex-column justify-center"
         >
           <p>Dificil</p>
-          <span> 8m</span>
+          <span> {{ dificil }}</span>
         </VCard>
         <VCard
-          @click="setDificuldade()"
+          @click="setDificuldade({ dificuldade: 'Bom', time: bom })"
           rounded="lg"
           class="m-4 d-bom d-flex flex-column justify-center"
         >
           <p>Bom</p>
-          <span> 15m</span>
+          <span> {{ bom }}</span>
         </VCard>
         <VCard
-          @click="setDificuldade()"
+          @click="setDificuldade({ dificuldade: 'Facil', time: facil })"
           rounded="lg"
           class="m-4 d-facil d-flex flex-column justify-center"
         >
           <p>Facil</p>
-          <span> 4d</span>
+          <span> {{ facil }}</span>
         </VCard>
       </VCardText>
     </v-card>
@@ -46,11 +47,16 @@ export default {
   data() {
     return {
       sheet: false,
+      facil: "4d",
+      bom: "15m",
+      dificil: "8m",
+      agora: "agora",
+      card_id: "",
     };
   },
   methods: {
-    setDificuldade() {
-      this.$emit("nextCard");
+    setDificuldade(difficulty) {
+      this.$emit("nextCard", { difficulty, card_id: this.card_id });
     },
   },
 };

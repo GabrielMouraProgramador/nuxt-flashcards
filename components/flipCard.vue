@@ -1,15 +1,15 @@
 <template>
   <div class="flip-card" @click="flip()">
     <div class="flip-card-inner" :class="{ rotated: rotate }">
-      <VCard rounded="xl" class="flip-card-front">{{ frete }}</VCard>
-      <VCard rounded="xl" class="flip-card-back">{{ tras }}</VCard>
+      <VCard rounded="xl" class="flip-card-front">{{ card?.frete }}</VCard>
+      <VCard rounded="xl" class="flip-card-back">{{ card?.tras }}</VCard>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  props: ["frete", "tras"],
+  props: ["card"],
   data() {
     return {
       rotate: false,
@@ -18,7 +18,7 @@ export default {
   methods: {
     flip() {
       this.rotate = !this.rotate;
-      this.$emit("next");
+      this.$emit("next", this.card);
     },
   },
 };
