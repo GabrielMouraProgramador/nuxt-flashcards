@@ -21,7 +21,6 @@ definePageMeta({
     </v-toolbar>
 
     <VCard rounded="xl" class="pa-4 m-4 bg-card">
-      {{ currentCard }} {{ teste }}
       <FlipCard
         ref="flip"
         @next="liberaDificuldade"

@@ -3,7 +3,6 @@
     <v-card class="rounded-t-xl">
       <div class="d-flex justify-space-between pa-2">
         <b class="w-100 text-center">Dificuldade do card </b>
-        {{ agora }}
       </div>
       <VCardText class="d-flex ga-2 height">
         <VCard
