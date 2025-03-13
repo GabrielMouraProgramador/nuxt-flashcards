@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-column justify-space-between h-100">
+  <div class="d-flex flex-column justify-space-between h-100 bg-page">
     <div class="d-flex flex-column justify-center">
       <img src="/success.svg" alt="Confete" class="gif" />
       <h3 class="my-2 text">Incrivel, voce revisou os 02 cartões hoje!</h3>
@@ -84,5 +84,9 @@ definePageMeta({
   color: white;
   text-align: center;
   line-height: 1;
+}
+.bg-page {
+  background: #282725;
+  height: 100%;
 }
 </style>
