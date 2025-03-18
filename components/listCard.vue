@@ -2,12 +2,14 @@
   <v-card rounded="lg" class="bg-card mt-4">
     <v-list>
       <div>
-        <v-list-item
-          v-for="card in cards"
-          :key="card.frete"
-          :subtitle="card.tras"
-          :title="card.frete"
-        >
+        <v-list-item v-for="card in cards" :key="card.frete" :title="card.frete">
+          <template v-slot:subtitle>
+            <p v-if="answers">
+              {{ card.tras }}
+            </p>
+            <p class="pb-4" v-else></p>
+          </template>
+
           <template v-slot:append>
             <Menu
               @clicked="clickedMenuDeck"
@@ -26,7 +28,7 @@
 
 <script>
 export default {
-  props: ["cards"],
+  props: ["cards", "answers"],
   data() {
     return {
       menuItem: [

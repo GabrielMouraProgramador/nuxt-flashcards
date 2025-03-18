@@ -1,9 +1,9 @@
 <template>
-  <h3 class="mt-2">Cartões no deck (2)</h3>
+  <h3 class="mt-2">Cartões no deck ({{ allCards }})</h3>
   <v-progress-linear
     buffer-value="60"
-    color="#282725"
-    model-value="40"
+    :color="(studiedCards * 100) / allCards == 100 ? 'success' : '#282725'"
+    :model-value="(studiedCards * 100) / allCards"
     :height="10"
     rounded
     stream
@@ -11,14 +11,19 @@
   <div class="d-flex mt-2">
     <div class="n-estudado d-flex mr-5">
       <p></p>
-      <span> 2 Não estudado </span>
+      <span> {{ allCards - studiedCards }} Não estudado </span>
     </div>
     <div class="p-revisar d-flex">
       <p></p>
-      <span> 2 Não estudado </span>
+      <span> {{ studiedCards }} Estudados </span>
     </div>
   </div>
 </template>
+<script>
+export default {
+  props: ["allCards", "studiedCards"],
+};
+</script>
 <style scoped>
 .n-estudado p {
   width: 10px;

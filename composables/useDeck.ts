@@ -127,6 +127,32 @@ export function useDeck() {
         throw new Error(err.message); 
       }
     }
+    async function getCardsToday(deck_id:string): Promise<any> {
+      try {
+        const { data, error } = await supabase.from('cards').select().lt('next_game', 'now()').eq('deck_id',deck_id)
+      
+        if (error) {
+          throw new Error(error.message);
+        }
+        return data
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
+    async function getCardsAlreadyStudied(deck_id:string): Promise<any> {
+      try {
+        const { data, error } = await supabase.from('cards').select().gt('next_game', 'now()').eq('deck_id',deck_id)
+      
+        if (error) {
+          throw new Error(error.message);
+        }
+        return data
+    
+      } catch (err: any) {
+        throw new Error(err.message); 
+      }
+    }
 
     return {
       addDeck,
@@ -138,7 +164,9 @@ export function useDeck() {
       deleteDeck,
       deleteCard,
       updateCard,
-      setDifficultyCard
+      setDifficultyCard,
+      getCardsToday,
+      getCardsAlreadyStudied
     };
   }
   

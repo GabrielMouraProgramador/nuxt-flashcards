@@ -1,16 +1,22 @@
 <template>
   <VCard rounded="xl" class="pa-4 bg-card mt-4">
-    <span class="title">{{ info?.name }}</span>
+    <div class="d-flex justify-space-between">
+      <span class="title">{{ info?.name }}</span>
+
+      <VBtn @click="setEye()" :icon="eye ? 'mdi-eye' : 'mdi-eye-off'"> </VBtn>
+    </div>
 
     <br />
     <span class="mode">Modo de aprendizado: <span>Repetição espaçada geral</span></span>
     <h3 class="my-2">Cartões para hoje</h3>
     <div class="d-flex bg-grid">
-      <div class="total-cards">{{ cards ? cards.length : 0 }}</div>
+      <div :class="['total-cards', { 'total-cards-large': todayCards > 99 }]">
+        {{ todayCards }}
+      </div>
       <div class="mx-4 center">
         <div class="d-flex">
           <VIcon size="35" color="#6f6e6c" class="mr-1">mdi-cards-playing-outline</VIcon>
-          <p class="n-estudado">0</p>
+          <p class="n-estudado">{{ notStudied }}</p>
         </div>
         <p class="descricao">Não estudado</p>
       </div>
@@ -18,12 +24,14 @@
       <div class="mx-4 center">
         <div class="d-flex">
           <VIcon size="35" color="success" class="mr-1">mdi-school</VIcon>
-          <p class="n-estudado">0</p>
+
+          <p class="n-estudado">{{ review }}</p>
         </div>
-        <p class="descricao">Para revisar</p>
+        <p class="descricao">Revisados</p>
       </div>
     </div>
     <VBtn
+      :disabled="todayCards <= 0"
       :to="`/estudar/${$route.params.deck_id}`"
       rounded="lg"
       class="mt-5"
@@ -34,11 +42,25 @@
     >
       <b>Estudar cartões</b></VBtn
     >
+    <span v-if="todayCards < 1" class="mode"
+      ><b>Parabéns:</b> Você está em dia com seus cards e seus estudos 😀</span
+    >
   </VCard>
 </template>
 <script>
 export default {
-  props: ["info", "cards"],
+  props: ["info", "todayCards", "notStudied", "review"],
+  data() {
+    return {
+      eye: false,
+    };
+  },
+  methods: {
+    setEye() {
+      this.eye = !this.eye;
+      this.$emit("eye", this.eye);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -66,6 +88,13 @@ export default {
   margin: 0 30px;
   font-weight: bold;
 }
+.total-cards-large {
+  font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .bg-grid {
   background: #282725;
   padding: 10px;
@@ -75,6 +104,7 @@ export default {
 .n-estudado {
   font-size: 25px;
 }
+
 .descricao {
   font-size: 10px;
 }

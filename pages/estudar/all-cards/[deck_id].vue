@@ -70,7 +70,7 @@ export default {
   },
   async created() {
     if (this.$route.params.deck_id) {
-      this.cardsToday();
+      this.allCards();
     }
   },
   methods: {
@@ -174,9 +174,9 @@ export default {
 
       return formatted;
     },
-    async cardsToday() {
-      const { getCardsToday } = useDeck();
-      this.cards = await getCardsToday(this.$route.params.deck_id);
+    async allCards() {
+      const { getCardsDeck } = useDeck();
+      this.cards = await getCardsDeck(this.$route.params.deck_id);
     },
     async getInfoDeck() {
       const { getDeckById } = useDeck();

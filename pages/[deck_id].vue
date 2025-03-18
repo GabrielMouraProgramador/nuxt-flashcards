@@ -18,11 +18,17 @@ definePageMeta({
       </v-toolbar-items>
     </v-toolbar>
     <div v-if="!loading">
-      <div v-if="cards && cards.length" class="pa-2">
-        <SumaryCard :info="info" :cards="cards" />
+      <div v-if="allCards && allCards.length" class="pa-2">
+        <SumaryCard
+          @eye="setAnswers"
+          :info="info"
+          :todayCards="todayCards.length"
+          :notStudied="allCards.length - todayCards.length"
+          :review="alreadyStudied.length"
+        />
 
-        <CardProgress />
-        <ListCard @refresh="refresh()"  :cards="cards" />
+        <CardProgress :allCards="allCards.length" :studiedCards="alreadyStudied.length" />
+        <ListCard @refresh="refresh()" :cards="allCards" :answers="answers" />
       </div>
       <div v-else class="grid">
         <NoCards @clicked="$refs.addcard.dialog = true" />
@@ -43,13 +49,18 @@ definePageMeta({
 export default {
   data() {
     return {
-      cards: [],
+      answers: false,
+      allCards: [],
+      alreadyStudied: [],
+      todayCards: [],
+      teste: {},
       info: {},
       loading: true,
       menuDeck: [
         { text: "Novo Card", icon: "mdi-plus" },
         { text: "Renomear", icon: "mdi-rename" },
         { text: "Apagar", icon: "mdi-delete" },
+        { text: "Estudar Todos", icon: "mdi-account-school" },
       ],
     };
   },
@@ -61,6 +72,9 @@ export default {
   },
 
   methods: {
+    setAnswers(newAnswersMode) {
+      this.answers = newAnswersMode;
+    },
     async deteleDeck(deck_id) {
       const { deleteDeck } = useDeck();
       await deleteDeck(deck_id);
@@ -75,6 +89,9 @@ export default {
         this.$refs.renameDeck.sheet = true;
         this.refresh();
       }
+      if (funcaoName == "Estudar Todos") {
+        this.$router.push(`/estudar/all-cards/${this.$route.params.deck_id}`);
+      }
 
       if (funcaoName == "Apagar") {
         this.$refs.confirmDelete.confirmDelete(
@@ -84,17 +101,18 @@ export default {
       }
     },
     async refresh() {
-      this.cards = await this.allCards();
-      this.info = await this.getInfoDeck();
+      const {
+        getCardsDeck,
+        getDeckById,
+        getCardsToday,
+        getCardsAlreadyStudied,
+      } = useDeck();
+
+      this.allCards = await getCardsDeck(this.$route.params.deck_id);
+      this.info = await getDeckById(this.$route.params.deck_id);
+      this.todayCards = await getCardsToday(this.$route.params.deck_id);
+      this.alreadyStudied = await getCardsAlreadyStudied(this.$route.params.deck_id);
       this.loading = false;
-    },
-    async allCards() {
-      const { getCardsDeck } = useDeck();
-      return await getCardsDeck(this.$route.params.deck_id);
-    },
-    async getInfoDeck() {
-      const { getDeckById } = useDeck();
-      return await getDeckById(this.$route.params.deck_id);
     },
   },
 };
