@@ -27,9 +27,14 @@ definePageMeta({
         :card="currentCard"
         class="mb-flip"
       />
-      <Dificuldade @nextCard="nextCatd" ref="dificuldade" />
+      <Dificuldade @nextCard="nextCatd" ref="dificuldade" @backCard="backCard()" />
       <div class="d-flex justify-end">
-        <VBtn v-if="next" @click="$refs.dificuldade.sheet = true"> PROXIMO</VBtn>
+        <VBtn
+          v-if="next"
+          @click="$refs.dificuldade.sheet = true"
+          icon="mdi-chevron-right"
+        >
+        </VBtn>
       </div>
     </VCard>
   </v-card>
@@ -74,6 +79,9 @@ export default {
     }
   },
   methods: {
+    backCard() {
+      this.$refs.flip.rotate = false;
+    },
     liberaDificuldade(data_card) {
       this.$refs.dificuldade.card_id = data_card.id;
 

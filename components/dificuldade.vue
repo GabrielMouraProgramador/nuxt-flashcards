@@ -6,7 +6,7 @@
       </div>
       <VCardText class="d-flex ga-2 height">
         <VCard
-          @click="setDificuldade({ dificuldade: 'agora', time: agora })"
+          @click="setCardBack()"
           rounded="lg"
           class="m-4 d-novo d-flex flex-column justify-center"
         >
@@ -56,6 +56,10 @@ export default {
   methods: {
     setDificuldade(difficulty) {
       this.$emit("nextCard", { difficulty, card_id: this.card_id });
+    },
+    setCardBack() {
+      this.$emit("backCard");
+      this.sheet = false;
     },
   },
 };
