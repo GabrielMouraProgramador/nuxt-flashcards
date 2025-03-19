@@ -17,7 +17,7 @@
           size="small"
           rounded="xl"
         >
-          NOVA DECK
+          NOVO DECK
         </VBtn>
       </div>
 

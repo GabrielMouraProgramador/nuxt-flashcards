@@ -9,7 +9,7 @@
         <VCardText>
           <p>
             <b>Crie seu próprio deck.</b>
-            Você obtém os melhore resultados com os cartões que você mesmo cria.
+            Você obtém os melhores resultados com os cartões que você mesmo cria.
           </p>
 
           <v-text-field
@@ -27,7 +27,7 @@
             @click="newDeck"
             size="50"
           >
-            Criar novo deck</VBtn
+            Criar deck</VBtn
           >
         </VCardText>
       </v-card>
