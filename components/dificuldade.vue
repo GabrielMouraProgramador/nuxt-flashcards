@@ -66,7 +66,8 @@ export default {
 </script>
 
 <style>
-.v-overlay__scrim {
+#estudar-deck_id .v-overlay__scrim,
+#estudar-all-cards-deck_id .v-overlay__scrim {
   background: transparent !important; /* Remove o fundo escuro */
 }
 </style>
