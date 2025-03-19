@@ -5,6 +5,7 @@
       <ListDeck ref="listDeck" />
     </div>
     <VBtn
+      elevation="5"
       color="primary"
       icon="mdi-plus"
       variant="flat"
@@ -42,7 +43,7 @@ export default {
 }
 .add-float {
   position: absolute;
-  bottom: 0px;
-  right: 25px;
+  bottom: 13px;
+  right: 17px;
 }
 </style>

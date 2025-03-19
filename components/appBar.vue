@@ -1,23 +1,35 @@
 <template>
-  <v-app-bar density="compact">
-    <template v-slot:prepend>
-      <v-btn>
-        <VIcon size="25"> mdi-menu </VIcon>
-      </v-btn>
-    </template>
+  <div>
+    <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
 
-    <div class="d-flex">
-      <VBtn variant="flat" color="primary" size="small" rounded="xl"> NOVA DECK </VBtn>
-    </div>
+    <v-app-bar density="compact">
+      <template v-slot:prepend>
+        <v-btn>
+          <VIcon size="25"> mdi-menu </VIcon>
+        </v-btn>
+      </template>
 
-    <template v-slot:append>
-      <v-btn>
-        <VIcon>
-          <Pencil />
-        </VIcon>
-      </v-btn>
-    </template>
-  </v-app-bar>
+      <div class="d-flex">
+        <VBtn
+          @click="$refs.newDeck.sheet = true"
+          variant="flat"
+          color="primary"
+          size="small"
+          rounded="xl"
+        >
+          NOVA DECK
+        </VBtn>
+      </div>
+
+      <template v-slot:append>
+        <v-btn>
+          <VIcon>
+            <Pencil />
+          </VIcon>
+        </v-btn>
+      </template>
+    </v-app-bar>
+  </div>
 </template>
 
 <script>
