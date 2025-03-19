@@ -2,8 +2,10 @@
   <div class="d-flex flex-column justify-space-between h-100 bg-page">
     <div class="d-flex flex-column justify-center">
       <img src="/success.svg" alt="Confete" class="gif" />
-      <h3 class="my-2 text">Incrivel, voce revisou os 02 cartões hoje!</h3>
-      <p class="mode text">Nao demore muito para voltar :)</p>
+      <h3 class="my-2 text pa-2">
+        Incrível, você revisou todos os seus cartões de hoje!
+      </h3>
+      <p class="mode text">Não demore muito para voltar :)</p>
     </div>
     <div @click="$router.push('/')" class="d-flex pa-5 mb-5">
       <VBtn
@@ -86,7 +88,7 @@ definePageMeta({
   line-height: 1;
 }
 .bg-page {
-  background: #282725;
+  background: #201c1d;
   height: 100%;
 }
 </style>

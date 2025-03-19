@@ -35,7 +35,7 @@
       class="mt-5"
       block
       variant="flat"
-      color="#73c8ff"
+      color="primary"
       size="50"
     >
       <b>Estudar cartões</b></VBtn
@@ -70,7 +70,7 @@ export default {
   font-size: 12px;
 }
 .mode span {
-  color: #187dbc;
+  color: #db6fb5;
 }
 .bg-card {
   background: #1e1d1b !important;

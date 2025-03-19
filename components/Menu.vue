@@ -9,7 +9,7 @@
     <v-card
       :elevation="10"
       class="bg-card elevation-9 mt-2 mr-4"
-      rounded="xl"
+      rounded="lg"
       width="200"
     >
       <v-list density="compact" class="bg-card">
