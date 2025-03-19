@@ -1,12 +1,10 @@
 <template>
   <VCard rounded="xl" class="pa-4 bg-card mt-4">
-    <div class="d-flex justify-space-between">
+    <div class="d-flex justify-space-between align-center mb-2">
       <span class="title">{{ info?.name }}</span>
 
       <VBtn @click="setEye()" :icon="eye ? 'mdi-eye' : 'mdi-eye-off'"> </VBtn>
     </div>
-
-    <br />
     <span class="mode">Modo de aprendizado: <span>Repetição espaçada geral</span></span>
     <h3 class="my-2">Cartões para hoje</h3>
     <div class="d-flex bg-grid">
