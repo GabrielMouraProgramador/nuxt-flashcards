@@ -29,7 +29,12 @@ definePageMeta({
       />
       <Dificuldade @nextCard="nextCatd" ref="dificuldade" />
       <div class="d-flex justify-end">
-        <VBtn v-if="next" @click="$refs.dificuldade.sheet = true"> PROXIMO</VBtn>
+        <VBtn
+          v-if="next"
+          @click="$refs.dificuldade.sheet = true"
+          icon="mdi-chevron-right"
+        >
+        </VBtn>
       </div>
     </VCard>
   </v-card>
@@ -47,17 +52,12 @@ export default {
       if (this.cards && this.cards.length > 0 && this.cards.length > this.atual) {
         const current = this.cards[this.atual];
 
-        const difficulty_times = this.getNextTime(
+        const difficulty_times = getNextTime(
           current.difficulty,
           current.ultimo_tempo,
           current.difficulty
         );
-        console.log(
-          difficulty_times,
-          current.difficulty,
-          current.ultimo_tempo,
-          current.difficulty
-        );
+
         this.$refs.dificuldade.facil = difficulty_times.facil;
         this.$refs.dificuldade.bom = difficulty_times.bom;
         this.$refs.dificuldade.dificil = difficulty_times.dificil;
@@ -84,58 +84,9 @@ export default {
         }
       }, "1000");
     },
-    getNextTime(dificuldade_atual, time_atual, dificuldade_antiga) {
-      // Converte tempo para minutos
-      const parseTime = (time) => {
-        const match = time.match(/(\d+)([dhm])/);
-        if (!match) return 0;
-
-        const value = parseInt(match[1]);
-        const unit = match[2];
-
-        if (unit === "d") return value * 24 * 60; // Dias para minutos
-        if (unit === "h") return value * 60; // Horas para minutos
-        if (unit === "m") return value; // Minutos
-
-        return 0;
-      };
-
-      // Formata o tempo de volta para string
-      const formatTime = (minutes) => {
-        if (minutes >= 1440) return `${Math.floor(minutes / 1440)}d`; // Dias
-        if (minutes >= 60) return `${Math.floor(minutes / 60)}h`; // Horas
-        return `${minutes}m`; // Minutos
-      };
-
-      // Tempo base
-      let time_facil = 3 * 24 * 60; // 3d em minutos
-      let time_bom = 15; // 15m
-      let time_dificil = 8; // 8m
-
-      let time_atual_min = parseTime(time_atual);
-
-      if (dificuldade_atual === dificuldade_antiga) {
-        time_facil = Math.min(time_atual_min * 7, 64800); // Máx 45 dias
-        time_bom = Math.min(time_atual_min + 15, 21600); // Máx 15 dias
-      } else {
-        if (dificuldade_atual === "facil") {
-          time_facil = Math.min(time_atual_min * 4, 64800); // Máx 45 dias
-        }
-        if (["bom", "dificil"].includes(dificuldade_atual)) {
-          time_facil = Math.min(time_atual_min + 1440, 64800); // Máx 45 dias
-          time_bom = Math.min(time_atual_min + 30, 21600); // Máx 15 dias
-        }
-      }
-
-      return {
-        facil: formatTime(time_facil),
-        bom: formatTime(time_bom),
-        dificil: formatTime(time_dificil),
-        agora: "agora",
-      };
-    },
-
     async nextCatd(data) {
+      this.$refs.flip.rotate = false;
+
       const { difficulty, card_id } = data;
       const { dificuldade, time } = difficulty;
       const { setDifficultyCard } = useDeck();
@@ -148,7 +99,6 @@ export default {
 
       this.$refs.dificuldade.sheet = false;
       this.next = false;
-      this.$refs.flip.rotate = false;
 
       if (this.atual + 1 == this.cards.length) {
         this.$router.push("/fim");
