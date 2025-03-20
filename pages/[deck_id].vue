@@ -24,9 +24,9 @@ definePageMeta({
           :info="info"
           :todayCards="todayCards.length"
           :notStudied="
-            allCards.length - todayCards.length < 0
+            alreadyStudied.length - todayCards.length > 0
               ? 0
-              : alreadyStudied.length - todayCards.length
+              : todayCards.length - alreadyStudied.length
           "
           :review="alreadyStudied.length"
         />
