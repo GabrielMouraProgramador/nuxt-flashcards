@@ -1,7 +1,7 @@
 <template>
   <v-menu v-model="menu">
     <template v-slot:activator="{ props }">
-      <v-btn :ripple="false" v-bind="props">
+      <v-btn size="40" class="ma-auto" :ripple="false" v-bind="props">
         <VIcon size="25">mdi-dots-vertical</VIcon>
       </v-btn>
     </template>

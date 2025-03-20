@@ -1,10 +1,22 @@
 <template>
   <v-card rounded="lg" class="bg-card mt-4">
     <v-list>
+      <v-text-field
+        v-model="search"
+        class="mx-3 mt-1 mb-3"
+        label="Buscar"
+        variant="outlined"
+      />
       <div>
-        <v-list-item v-for="card in cards" :key="card.frete" :title="card.frete">
+        <v-list-item v-for="card in searched" :title="card.frete">
+          <template v-slot:title>
+            <p class="capitalize">
+              {{ card.frete }}
+            </p>
+          </template>
+
           <template v-slot:subtitle>
-            <p v-if="answers">
+            <p class="capitalize" v-if="answers">
               {{ card.tras }}
             </p>
             <p class="pb-4" v-else></p>
@@ -21,6 +33,7 @@
         </v-list-item>
       </div>
     </v-list>
+
     <ConfirmDelete ref="confirmDelete" @delete="deteleCard" />
     <EditCard @refresh="refresh()" ref="editcard" />
   </v-card>
@@ -31,11 +44,34 @@ export default {
   props: ["cards", "answers"],
   data() {
     return {
+      search: "",
       menuItem: [
         { text: "Editar", icon: "mdi-rename" },
         { text: "Apagar", icon: "mdi-delete" },
       ],
     };
+  },
+  computed: {
+    searched() {
+      if (!this.search || this.search == "") {
+        return this.cards;
+      }
+      // Função para remover caracteres especiais e acentuação
+      const normalizeString = (str) => {
+        return str
+          .normalize("NFD") // Decomposição de caracteres (ex: "á" vira "a" + "́")
+          .replace(/[\u0300-\u036f]/g, "") // Remove os sinais diacríticos (acentos)
+          .toLowerCase(); // Converte para minúsculo
+      };
+
+      return this.cards.filter((obj) => {
+        // Concatena e normaliza os campos 'frete' e 'tras'
+        const texto = `${obj.frete || ""} ${obj.tras || ""}`.toLowerCase();
+
+        // Normaliza tanto o texto de busca quanto os dados para ignorar acentuação
+        return normalizeString(texto).includes(normalizeString(this.search));
+      });
+    },
   },
   methods: {
     async deteleCard(card_id) {
@@ -91,5 +127,8 @@ export default {
   padding: 10px;
   justify-content: space-around;
   border-radius: 20px;
+}
+.capitalize {
+  text-transform: capitalize !important;
 }
 </style>

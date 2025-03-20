@@ -11,7 +11,7 @@
   <div class="d-flex mt-2">
     <div class="n-estudado d-flex mr-5">
       <p></p>
-      <span> {{ allCards - studiedCards }} Não estudado </span>
+      <span> {{ notStudied }} Não estudado </span>
     </div>
     <div class="p-revisar d-flex">
       <p></p>
@@ -21,7 +21,7 @@
 </template>
 <script>
 export default {
-  props: ["allCards", "studiedCards"],
+  props: ["allCards", "studiedCards", "notStudied"],
 };
 </script>
 <style scoped>

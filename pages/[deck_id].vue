@@ -13,7 +13,7 @@ definePageMeta({
 
       <v-spacer></v-spacer>
 
-      <v-toolbar-items>
+      <v-toolbar-items class="pr-2">
         <Menu @clicked="clickedMenuDeck" :itemsMenu="menuDeck" ref="menuDeck" />
       </v-toolbar-items>
     </v-toolbar>
@@ -23,11 +23,23 @@ definePageMeta({
           @eye="setAnswers"
           :info="info"
           :todayCards="todayCards.length"
-          :notStudied="allCards.length - todayCards.length"
+          :notStudied="
+            allCards.length - todayCards.length < 0
+              ? 0
+              : alreadyStudied.length - todayCards.length
+          "
           :review="alreadyStudied.length"
         />
 
-        <CardProgress :allCards="allCards.length" :studiedCards="alreadyStudied.length" />
+        <CardProgress
+          :allCards="allCards.length"
+          :notStudied="
+            alreadyStudied.length - todayCards.length < 0
+              ? 0
+              : alreadyStudied.length - todayCards.length
+          "
+          :studiedCards="alreadyStudied.length"
+        />
         <ListCard @refresh="refresh()" :cards="allCards" :answers="answers" />
       </div>
       <div v-else class="grid">
