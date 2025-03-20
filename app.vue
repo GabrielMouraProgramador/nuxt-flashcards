@@ -1,9 +1,10 @@
 <template>
   <NuxtLayout>
     <v-app>
-      <v-pull-to-refresh :pull-down-threshold="pullDownThreshold" @load="load">
+      <!-- <v-pull-to-refresh :pull-down-threshold="pullDownThreshold" @load="load">
         <NuxtPage />
-      </v-pull-to-refresh>
+      </v-pull-to-refresh> -->
+      <NuxtPage />
     </v-app>
   </NuxtLayout>
 </template>
