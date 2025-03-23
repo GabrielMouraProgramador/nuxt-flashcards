@@ -73,7 +73,27 @@ export default {
       this.allCards();
     }
   },
+  mounted() {
+    if (typeof window !== "undefined") {
+      window.addEventListener("keydown", this.handleKeyDown);
+    }
+  },
+  unmounted() {
+    if (typeof window !== "undefined") {
+      window.removeEventListener("keydown", this.handleKeyDown);
+    }
+  },
+
   methods: {
+    handleKeyDown(event) {
+      if (event.key === "Enter") {
+        this.$refs.flip.rotate = true;
+        this.$refs.dificuldade.sheet = true;
+      }
+      if (event.key === "d" || event.key === "D") {
+        this.$refs.dificuldade.sheet = !this.$refs.dificuldade.sheet;
+      }
+    },
     liberaDificuldade(data_card) {
       this.$refs.dificuldade.card_id = data_card.id;
 
