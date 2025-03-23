@@ -35,7 +35,7 @@
     </v-list>
 
     <ConfirmDelete ref="confirmDelete" @delete="deteleCard" />
-    <EditCard @refresh="refresh()" ref="editcard" />
+    <EditCard @refresh="refreshPage()" ref="editcard" />
   </v-card>
 </template>
 
@@ -74,10 +74,13 @@ export default {
     },
   },
   methods: {
+    refreshPage() {
+      this.$router.go(0);
+    },
     async deteleCard(card_id) {
       const { deleteCard } = useDeck();
       await deleteCard(card_id);
-      this.$emit("refresh");
+      this.refreshPage();
     },
     clickedMenuDeck(dataMenu) {
       if (dataMenu.text == "Editar") {

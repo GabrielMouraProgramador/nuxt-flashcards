@@ -52,7 +52,7 @@ definePageMeta({
         type="list-item-two-line, image, table-tfoot"
       ></v-skeleton-loader>
     </VCard>
-    <RenameDeck ref="renameDeck" />
+    <RenameDeck ref="renameDeck" @refresh="refreshPage()" />
     <ConfirmDelete ref="confirmDelete" @delete="deteleDeck" />
   </v-card>
 </template>
@@ -84,6 +84,9 @@ export default {
   },
 
   methods: {
+    refreshPage() {
+      this.$router.go(0);
+    },
     setAnswers(newAnswersMode) {
       this.answers = newAnswersMode;
     },
