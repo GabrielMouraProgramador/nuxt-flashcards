@@ -53,42 +53,33 @@ export default {
       card_id: "",
     };
   },
-  mounted() {
-    if (typeof window !== "undefined") {
-      window.addEventListener("keydown", this.handleKeyDown);
-    }
-  },
-  unmounted() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("keydown", this.handleKeyDown);
-    }
-  },
   methods: {
-    handleKeyDown(event) {
-      if (event.key === "1") {
-        this.setCardBack();
-      }
-      if (event.key === "2") {
-        this.$emit("nextCard", {
-          difficulty: { dificuldade: "Dificil", time: this.dificil },
-          card_id: this.card_id,
-        });
-      }
-      if (event.key === "3") {
-        this.$emit("nextCard", {
-          difficulty: { dificuldade: "Bom", time: this.bom },
-          card_id: this.card_id,
-        });
-      }
-      if (event.key === "4") {
-        this.$emit("nextCard", {
-          difficulty: { dificuldade: "Facil", time: this.facil },
-          card_id: this.card_id,
-        });
+    handleKey(eventKey) {
+      if (this.sheet) {
+        if (eventKey === "1") {
+          this.setCardBack();
+        }
+        if (eventKey === "2") {
+          this.$emit("nextCard", {
+            difficulty: { dificuldade: "Dificil", time: this.dificil },
+            card_id: this.card_id,
+          });
+        }
+        if (eventKey === "3") {
+          this.$emit("nextCard", {
+            difficulty: { dificuldade: "Bom", time: this.bom },
+            card_id: this.card_id,
+          });
+        }
+        if (eventKey === "4") {
+          this.$emit("nextCard", {
+            difficulty: { dificuldade: "Facil", time: this.facil },
+            card_id: this.card_id,
+          });
+        }
       }
     },
     setDificuldade(difficulty) {
-      console.log("difficulty", { difficulty, card_id: this.card_id });
       this.$emit("nextCard", { difficulty, card_id: this.card_id });
     },
     setCardBack() {

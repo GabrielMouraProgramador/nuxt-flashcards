@@ -15,8 +15,13 @@ definePageMeta({
       <VChip size="small">{{ atual }}/{{ cards.length }}</VChip>
       <v-spacer></v-spacer>
 
-      <v-toolbar-items>
-        <v-btn icon="mdi-dots-vertical" variant="text"></v-btn>
+      <v-toolbar-items class="pr-2">
+        <Menu
+          @clicked="clickedMenuDeck"
+          :itemsMenu="menuItem"
+          :item="currentCard"
+          ref="menuItem"
+        />
       </v-toolbar-items>
     </v-toolbar>
 
@@ -37,6 +42,8 @@ definePageMeta({
         </VBtn>
       </div>
     </VCard>
+    <ConfirmDelete ref="confirmDelete" @delete="deteleCard" />
+    <EditCard @refresh="refresh()" ref="editcard" />
   </v-card>
 </template>
 
@@ -46,6 +53,10 @@ export default {
     cards: [],
     next: false,
     atual: 0,
+    menuItem: [
+      { text: "Editar", icon: "mdi-rename" },
+      { text: "Apagar", icon: "mdi-delete" },
+    ],
   }),
   computed: {
     currentCard() {
@@ -84,14 +95,53 @@ export default {
     }
   },
   methods: {
+    refresh() {
+      this.$router.go(0);
+    },
+    clickedMenuDeck(dataMenu) {
+      if (dataMenu.text == "Editar") {
+        this.$refs.editcard.id_card = dataMenu?.item.id;
+        this.$refs.editcard.frete = dataMenu?.item.frete;
+        this.$refs.editcard.tras = dataMenu?.item.tras;
+
+        this.$refs.editcard.dialog = true;
+      }
+
+      if (dataMenu.text == "Apagar") {
+        this.$refs.confirmDelete.confirmDelete(
+          dataMenu?.item.id,
+          "CARD " + dataMenu?.item.frete
+        );
+      }
+    },
+
     handleKeyDown(event) {
-      if (event.key === "Enter") {
-        this.$refs.flip.rotate = true;
-        this.$refs.dificuldade.sheet = true;
+      if (
+        this.$refs.editcard.dialog == false &&
+        this.$refs.confirmDelete.snackbar.active == false
+      ) {
+        console.log(this.$refs.editcard.dialog, this.$refs.confirmDelete.snackbar.active);
+        if (event.key === "Enter") {
+          this.$refs.flip.rotate = true;
+          this.$refs.dificuldade.sheet = true;
+        }
+        if (event.key === "d" || event.key === "D") {
+          this.$refs.dificuldade.sheet = !this.$refs.dificuldade.sheet;
+        }
+        if (event.key === " ") {
+          this.$refs.flip.flip();
+        }
+
+        const keyDifficulty = ["1", "2", "3", "4"];
+        if (keyDifficulty.includes(event.key)) {
+          this.$refs.dificuldade.handleKey(event.key);
+        }
       }
-      if (event.key === "d" || event.key === "D") {
-        this.$refs.dificuldade.sheet = !this.$refs.dificuldade.sheet;
-      }
+    },
+    async deteleCard(card_id) {
+      const { deleteCard } = useDeck();
+      await deleteCard(card_id);
+      this.refresh();
     },
     backCard() {
       this.$refs.flip.rotate = false;

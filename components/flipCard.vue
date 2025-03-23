@@ -15,24 +15,7 @@ export default {
       rotate: false,
     };
   },
-  mounted() {
-    if (typeof window !== "undefined") {
-      window.addEventListener("keydown", this.handleKeyDown);
-    }
-  },
-  unmounted() {
-    if (typeof window !== "undefined") {
-      window.removeEventListener("keydown", this.handleKeyDown);
-    }
-  },
-
   methods: {
-    handleKeyDown(event) {
-      if (event.key === " ") {
-        this.rotate = !this.rotate;
-        this.$emit("next", this.card); 
-      }
-    },
     flip() {
       this.rotate = !this.rotate;
       this.$emit("next", this.card);
