@@ -16,15 +16,25 @@ export function useDeck() {
         throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
       }
     }
+    function shuffleArray(array:any) {
+      for (let i = array.length - 1; i > 0; i--) {
+        // Gera um índice aleatório entre 0 e i
+        const j = Math.floor(Math.random() * (i + 1));
+        
+        // Troca os elementos de índice i e j
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
 
     async function getCardsDeck(deck_id: string): Promise<any> {
       try {
         const { data, error } = await supabase.from('cards').select().eq('deck_id',deck_id)
-     
+        
         if ( error) {
           throw new Error(error.message);
         }
-        return data
+        return shuffleArray(data);
     
       } catch (err: any) {
         throw new Error(err.message); 
@@ -134,7 +144,7 @@ export function useDeck() {
         if (error) {
           throw new Error(error.message);
         }
-        return data
+        return shuffleArray(data);
     
       } catch (err: any) {
         throw new Error(err.message); 
