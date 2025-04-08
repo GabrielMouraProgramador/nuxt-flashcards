@@ -21,14 +21,9 @@
           <p class="mb-10">
             {{ card?.tras }}
           </p>
-          <v-img
-            v-if="imageTras"
-            :max-width="800"
-            aspect-ratio="16/9"
-            cover
-            :src="imageTras"
-            class="mx-auto img"
-          ></v-img>
+          <div>
+            <v-img v-if="imageTras" cover :src="imageTras" class="mx-auto img"></v-img>
+          </div>
         </div>
       </VCard>
     </div>
@@ -118,7 +113,15 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .img {
   border-radius: 30px;
+  max-width: 350px !important;
+}
+@media (max-width: 480px) {
+  .img {
+    border-radius: 30px;
+    max-width: 90% !important;
+  }
 }
 </style>
