@@ -123,13 +123,25 @@ export function useDeck() {
     }
     async function updateCard(data: any): Promise<void> {
       try {
-        const {id_card,frete,tras } = data;
+        const {id_card,frete,tras,imageFrente,imageTras,deck_id } = data;
 
-        const { error } = await supabase.from('cards').update({ frete,tras  }).eq('id', id_card);
+        const fileNameFrente = ( imageFrente?.name)? imageFrente.name  :"";
+        const fileNameTras = ( imageTras?.name)? imageTras.name  :"";
+        const { error } = await supabase.from('cards').update({ frete,tras,   }).eq('id', id_card);
+
+        if(fileNameFrente){
+          await supabase.from('cards').update({ imageFrente: fileNameFrente  }).eq('id', id_card);
+        }
+        if(fileNameTras){
+          await supabase.from('cards').update({ imageTras: fileNameTras  }).eq('id', id_card);
+        }
 
         if (error) {
           throw new Error(error.message);
         }
+        if(imageFrente) storage.uploadFile(deck_id,imageFrente)
+        if(imageTras) storage.uploadFile(deck_id,imageTras)
+
       } catch (err: any) {
 
         throw new Error(err.message);  // Optionally, rethrow or handle the error as needed

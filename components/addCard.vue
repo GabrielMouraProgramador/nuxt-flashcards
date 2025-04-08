@@ -1,6 +1,3 @@
-<script setup>
-import { VFileUpload } from "vuetify/labs/VFileUpload";
-</script>
 <template>
   <v-dialog v-model="dialog" height="auto">
     <v-card rounded="xl">
@@ -91,7 +88,12 @@ import { VFileUpload } from "vuetify/labs/VFileUpload";
 </template>
 
 <script>
+import { VFileUpload } from "vuetify/labs/VFileUpload";
+
 export default {
+  components: {
+    VFileUpload,
+  },
   data: () => ({
     dialog: false,
     frete: "",
