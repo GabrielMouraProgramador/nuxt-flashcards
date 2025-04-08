@@ -100,6 +100,7 @@ export default {
     tras: "",
     id_card: "",
     deck_id: "",
+    card: null,
     fileFrente: null,
     fileTras: null,
     loading: false,
@@ -134,6 +135,7 @@ export default {
         deck_id: this.$route.params?.deck_id || "",
         imageFrente: this.fileFrente,
         imageTras: this.fileTras,
+        card: this.card,
       };
       this.loading = true;
       this.dialog = false;
@@ -143,6 +145,7 @@ export default {
       this.tras = "";
       this.fileFrente = null;
       this.fileTras = null;
+      this.card = null;
       // this.$emit("refresh");
     },
   },

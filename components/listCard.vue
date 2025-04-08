@@ -87,6 +87,7 @@ export default {
         this.$refs.editcard.id_card = dataMenu?.item.id;
         this.$refs.editcard.frete = dataMenu?.item.frete;
         this.$refs.editcard.tras = dataMenu?.item.tras;
+        this.$refs.editcard.card = dataMenu?.item;
 
         this.$refs.editcard.dialog = true;
       }

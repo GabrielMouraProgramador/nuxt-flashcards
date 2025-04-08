@@ -54,10 +54,24 @@ export function useStorage() {
         }
     
       }
+      async function deleteFile(bucketName: string, fileName: string) {
+        try {
+          const { error } = await supabase.storage.from(bucketName).remove([fileName]);
+      
+          if (error) {
+            throw new Error("Falha ao deletar imagem");
+          }
+      
+          return true;
+        } catch (err) {
+          throw new Error("Erro ao tentar remover o arquivo do bucket");
+        }
+      }
 
       return {
         createBucket,
         uploadFile,
-        getUrlFile
+        getUrlFile,
+        deleteFile
       }
 }
