@@ -7,16 +7,30 @@
             {{ card?.frete }}
           </p>
           <v-img
-            v-if="image"
+            v-if="imageFrente"
             :max-width="800"
             aspect-ratio="16/9"
             cover
-            :src="image"
+            :src="imageFrente"
             class="mx-auto img"
           ></v-img>
         </div>
       </VCard>
-      <VCard rounded="xl" class="flip-card-back">{{ card?.tras }} </VCard>
+      <VCard rounded="xl" class="flip-card-back">
+        <div class="w-100 pa-4">
+          <p class="mb-10">
+            {{ card?.tras }}
+          </p>
+          <v-img
+            v-if="imageTras"
+            :max-width="800"
+            aspect-ratio="16/9"
+            cover
+            :src="imageTras"
+            class="mx-auto img"
+          ></v-img>
+        </div>
+      </VCard>
     </div>
   </div>
 </template>
@@ -27,24 +41,25 @@ export default {
   data() {
     return {
       rotate: false,
-      image: "",
+      imageTras: "",
+      imageFrente: "",
     };
   },
   watch: {
     async card(newCard) {
-      const { deck_id, image } = newCard;
-      alert("MUDOU");
-      return this.getImage(deck_id, image);
+      const { getUrlFile } = useStorage();
+
+      const { deck_id, imageFrente, imageTras } = newCard;
+
+      getUrlFile(deck_id, imageTras).then((result) => {
+        this.imageTras = result ? result : "";
+      });
+      getUrlFile(deck_id, imageFrente).then((result) => {
+        this.imageFrente = result ? result : "";
+      });
     },
   },
   methods: {
-    getImage(deck_id, fileName) {
-      const { getUrlFile } = useStorage();
-
-      getUrlFile(deck_id, fileName).then((result) => {
-        this.image = result ? result : "";
-      });
-    },
     flip() {
       this.rotate = !this.rotate;
       this.$emit("next", this.card);

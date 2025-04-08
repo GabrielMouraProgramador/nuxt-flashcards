@@ -104,15 +104,17 @@ export function useDeck() {
     }
     async function addCard(data: any): Promise<void> {
       try {
-        const {deck_id,frete,tras,image } = data;
-        const fileName = ( image?.name)? image?.name  :"";
-        const { error } = await supabase.from('cards').insert({ deck_id,frete,tras, image: fileName });
+        const {deck_id,frete,tras,imageFrente,imageTras } = data;
+        const fileNameFrente = ( imageFrente?.name)? imageFrente.name  :"";
+        const fileNameTras = ( imageTras?.name)? imageTras.name  :"";
+
+        const { error } = await supabase.from('cards').insert({ deck_id,frete,tras, imageFrente: fileNameFrente,imageTras: fileNameTras });
 
         if (error) {
           throw new Error(error.message);
         }
-        await storage.uploadFile(deck_id,image)
-
+        if(imageFrente) storage.uploadFile(deck_id,imageFrente)
+        if(imageTras) storage.uploadFile(deck_id,imageTras)
 
       } catch (err: any) {
 
