@@ -1,8 +1,22 @@
 <template>
   <div class="flip-card" @click="flip()">
     <div class="flip-card-inner" :class="{ rotated: rotate }">
-      <VCard rounded="xl" class="flip-card-front">{{ card?.frete }}</VCard>
-      <VCard rounded="xl" class="flip-card-back">{{ card?.tras }}</VCard>
+      <VCard rounded="xl" class="flip-card-front">
+        <div class="w-100 pa-4">
+          <p class="mb-10">
+            {{ card?.frete }}
+          </p>
+          <v-img
+            v-if="image"
+            :max-width="800"
+            aspect-ratio="16/9"
+            cover
+            :src="image"
+            class="mx-auto img"
+          ></v-img>
+        </div>
+      </VCard>
+      <VCard rounded="xl" class="flip-card-back">{{ card?.tras }} </VCard>
     </div>
   </div>
 </template>
@@ -13,9 +27,24 @@ export default {
   data() {
     return {
       rotate: false,
+      image: "",
     };
   },
+  watch: {
+    async card(newCard) {
+      const { deck_id, image } = newCard;
+      alert("MUDOU");
+      return this.getImage(deck_id, image);
+    },
+  },
   methods: {
+    getImage(deck_id, fileName) {
+      const { getUrlFile } = useStorage();
+
+      getUrlFile(deck_id, fileName).then((result) => {
+        this.image = result ? result : "";
+      });
+    },
     flip() {
       this.rotate = !this.rotate;
       this.$emit("next", this.card);
@@ -73,5 +102,8 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.img {
+  border-radius: 30px;
 }
 </style>

@@ -3,14 +3,18 @@ import { serverSupabaseClient } from '#supabase/server'
 
 export function useDeck() {
     const supabase = useSupabaseClient()
+    const storage = useStorage()
     // Add deck
     async function addDeck(name: string): Promise<void> {
       try {
-        const { data, error } = await supabase.from('deck').insert({ name, cards: {} });
-
-        if (error) {
+        const { data, error } = await supabase.from('deck').insert({ name, cards: {} }).select();
+   
+        if (error || !data || data.length == 0 ) {
           throw new Error(error.message);
         }
+
+        const {id: deckId}=  data[0]
+        await storage.createBucket(deckId)
       } catch (err: any) {
 
         throw new Error(err.message);  // Optionally, rethrow or handle the error as needed
@@ -100,13 +104,16 @@ export function useDeck() {
     }
     async function addCard(data: any): Promise<void> {
       try {
-        const {deck_id,frete,tras } = data;
-
-        const { error } = await supabase.from('cards').insert({ deck_id,frete,tras  });
+        const {deck_id,frete,tras,image } = data;
+        const fileName = ( image?.name)? image?.name  :"";
+        const { error } = await supabase.from('cards').insert({ deck_id,frete,tras, image: fileName });
 
         if (error) {
           throw new Error(error.message);
         }
+        await storage.uploadFile(deck_id,image)
+
+
       } catch (err: any) {
 
         throw new Error(err.message);  // Optionally, rethrow or handle the error as needed

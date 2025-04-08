@@ -1,27 +1,26 @@
+<script setup lang="ts"></script>
 <template>
-  <VCard rounded="xl" class="ma-4 card-height">
-    <div class="overflow-y-auto">
-      <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
-      <ListDeck ref="listDeck" />
-    </div>
-    <VBtn
-      elevation="5"
-      color="primary"
-      icon="mdi-plus"
-      variant="flat"
-      class="ma-2 add-float"
-      @click="$refs.newDeck.sheet = true"
-    ></VBtn>
-  </VCard>
+  <div>
+    <AppBar />
+    <VCard rounded="xl" class="ma-4 card-height">
+      <div class="overflow-y-auto">
+        <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
+        <ListDeck ref="listDeck" />
+      </div>
+      <VBtn
+        elevation="5"
+        color="primary"
+        icon="mdi-plus"
+        variant="flat"
+        class="ma-2 add-float"
+        @click="$refs.newDeck.sheet = true"
+      ></VBtn>
+    </VCard>
+  </div>
 </template>
 
 <script>
-import { Pencil } from "lucide-vue-next";
-
 export default {
-  components: {
-    Pencil,
-  },
   data() {
     return {
       actions: {

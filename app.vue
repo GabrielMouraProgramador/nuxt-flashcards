@@ -29,3 +29,8 @@ async function load({ done }) {
   done("ok");
 }
 </script>
+<style>
+.bg {
+  background: black !important;
+}
+</style>

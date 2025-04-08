@@ -1,3 +1,6 @@
+<script setup>
+import { VFileUpload } from "vuetify/labs/VFileUpload";
+</script>
 <template>
   <v-dialog v-model="dialog" height="auto">
     <v-card rounded="xl">
@@ -27,6 +30,7 @@
           density="comfortable"
           variant="solo-filled"
         ></v-textarea>
+        <v-file-upload v-model="file" density="compact" variant="compact"></v-file-upload>
 
         <VBtn
           :disabled="!frete || !tras"
@@ -51,6 +55,7 @@ export default {
     dialog: false,
     frete: "",
     tras: "",
+    file: null,
     loading: false,
   }),
 
@@ -61,6 +66,7 @@ export default {
         deck_id: this.$route.params.deck_id,
         frete: this.frete,
         tras: this.tras,
+        image: this.file,
       };
       this.loading = true;
       this.deck = await addCard(data);
