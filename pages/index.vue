@@ -1,11 +1,13 @@
-<script setup lang="ts"></script>
+<script setup>
+import { variables } from "@/scrips/home";
+</script>
 <template>
   <div>
     <AppBar />
     <VCard rounded="xl" class="ma-4 card-height">
       <div class="overflow-y-auto">
-        <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
-        <ListDeck ref="listDeck" />
+        <NewDeck />
+        <ListDeck />
       </div>
       <VBtn
         elevation="5"
@@ -13,23 +15,12 @@
         icon="mdi-plus"
         variant="flat"
         class="ma-2 add-float"
-        @click="$refs.newDeck.sheet = true"
+        @click="variables.home = true"
       ></VBtn>
     </VCard>
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      actions: {
-        sheetAdd: false,
-      },
-    };
-  },
-};
-</script>
 <style scoped>
 .card-height {
   height: 100%;

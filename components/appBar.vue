@@ -1,6 +1,10 @@
+<script setup>
+import { Pencil } from "lucide-vue-next";
+import { variables } from "@/scrips/home";
+</script>
 <template>
   <div>
-    <NewDeck @refresh="$refs.listDeck.allDecks()" ref="newDeck" />
+    <NewDeck />
 
     <v-app-bar density="compact">
       <template v-slot:prepend>
@@ -11,7 +15,7 @@
 
       <div class="d-flex">
         <VBtn
-          @click="$refs.newDeck.sheet = true"
+          @click="variables.home = true"
           variant="flat"
           color="primary"
           size="small"
@@ -31,13 +35,3 @@
     </v-app-bar>
   </div>
 </template>
-
-<script>
-import { Pencil } from "lucide-vue-next";
-
-export default {
-  components: {
-    Pencil,
-  },
-};
-</script>

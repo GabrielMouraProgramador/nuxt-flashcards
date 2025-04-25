@@ -1,9 +1,17 @@
+<script setup>
+import { variables, methods } from "@/scrips/home";
+
+onMounted(() => {
+  methods.allDecks();
+});
+</script>
+
 <template>
   <div id="deck-list">
-    <v-list v-if="!loading">
-      <div v-for="deck in deckList" :key="deck.title">
+    <v-list v-if="!variables.list.loading">
+      <div>
         <v-list-item
-          :v-for="deck in deckList"
+          v-for="deck in variables.list.decks"
           :key="deck.name"
           :subtitle="useFormat.date(deck.created_at)"
           :title="deck.name"
@@ -16,34 +24,15 @@
       </div>
     </v-list>
     <v-skeleton-loader
+      v-if="variables.list.loading"
       width="350px"
       v-for="index in 4"
       :key="index"
-      v-if="loading"
       type="list-item-two-line"
     />
   </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    deckList: [],
-    loading: true,
-  }),
-  mounted() {
-    this.allDecks();
-  },
-  methods: {
-    async allDecks() {
-      this.loading = true;
-      const { getAllDecks } = useDeck();
-      this.deckList = await getAllDecks();
-      this.loading = false;
-    },
-  },
-};
-</script>
 <style>
 #deck-list .v-skeleton-loader__text {
   height: 7px !important;
