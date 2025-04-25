@@ -10,7 +10,6 @@ export interface ICardRepository{
     createCard(card:Card): Promise<ApiResponse<{ id: string }>>
     updateCard(card:Card): Promise<ApiResponse>
     deleteCard(card_id: string): Promise<ApiResponse>
-    getAllCards(): Promise<ApiResponse<Card[]>>
     updateDifficultyCard(card:Card): Promise<ApiResponse>
     getCardsToday(deck_id:string): Promise<ApiResponse<Card[]>>
     getCardsAlreadyStudied(deck_id:string): Promise<ApiResponse<Card[]>>

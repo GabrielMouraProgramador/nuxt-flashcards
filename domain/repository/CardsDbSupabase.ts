@@ -98,36 +98,6 @@ export class CardsDbSupabase implements ICardRepository {
             }
         }
     }
-    public async getAllCards(): Promise<ApiResponse<Card[]>> {
-        try {
-            const { data, error } = await this.supabase.from('deck').select()
-     
-            if (error) {  throw error }
-       
-            return { 
-                data: data.map((card:any) => {
-                    return new Card({
-                        id: card.id,
-                        created_at: card.created_at,
-                        difficulty: card.difficulty,
-                        last_time: card.ultimo_tempo,
-                        deck_id: card.deck_id,
-                        front: card.frete,
-                        behind: card.tras,
-                        next_game: card.next_game
-                    })
-                }),
-                status: 200
-            };
-
-        } catch (err:any) {
-            console.error('Falha buscar todos os cards', err)
-            return {
-                error: err?.error || 'Erro desconhecido',
-                status: err?.status || 500,
-            }
-        }
-    }
     public async updateDifficultyCard(card: Card): Promise<ApiResponse> {
         try {
             const { deck_id,front,behind,difficulty,next_game,last_time } = card.getValues()

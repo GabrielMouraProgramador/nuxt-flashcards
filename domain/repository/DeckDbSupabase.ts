@@ -107,5 +107,30 @@ export class DeckDbSupabase implements IDeckRepository {
                 }
             }
     }
+    public async getAllDecks(): Promise<ApiResponse<Deck[]>> {
+            try {
+                const { data, error } = await this.supabase.from('deck').select()
+         
+                if (error) {  throw error }
+           
+                return { 
+                    data: data.map((deck:any) => {
+                        return new Deck({
+                            id: deck.id,
+                            created_at: deck.created_at,
+                            name: deck.name
+                        })
+                    }),
+                    status: 200
+                };
+    
+            } catch (err:any) {
+                console.error('Falha buscar todos os cards', err)
+                return {
+                    error: err?.error || 'Erro desconhecido',
+                    status: err?.status || 500,
+                }
+            }
+        }
 
 }

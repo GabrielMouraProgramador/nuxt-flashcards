@@ -11,4 +11,5 @@ export interface IDeckRepository{
     renameDeck(deck:Deck): Promise<ApiResponse>
     deleteDeck(deck_id:string): Promise<ApiResponse>
     getDeckById(deck_id:string): Promise<ApiResponse<Deck[]>>
+    getAllDecks(): Promise<ApiResponse<Deck[]>>
 }  
