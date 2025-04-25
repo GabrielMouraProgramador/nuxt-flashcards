@@ -26,4 +26,11 @@ export class Deck{
         
         return this.id
     }
+    public getValues(){
+        return{
+            id: this.id,
+            created_at: this.created_at,
+            name: this.name
+        }
+    }
 }

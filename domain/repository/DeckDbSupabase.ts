@@ -1,6 +1,6 @@
 
 import { Deck } from "../entities/Deck";
-import type { IDeckRepository, ApiResponse} from "../interfaces/IDeckRepository";
+import type { IDeckRepository, ApiResponse, DeckDTO} from "../interfaces/IDeckRepository";
 
 export class DeckDbSupabase implements IDeckRepository {
     private supabase: ReturnType<typeof useSupabaseClient>;
@@ -82,7 +82,7 @@ export class DeckDbSupabase implements IDeckRepository {
                 }
             }
     }
-    public async getDeckById(deck_id:string): Promise<ApiResponse<Deck[]>> {
+    public async getDeckById(deck_id:string): Promise<ApiResponse<DeckDTO[]>> {
             try {
                 const { data, error } = await this.supabase.from('deck').select().eq('id',deck_id)
          
@@ -90,11 +90,12 @@ export class DeckDbSupabase implements IDeckRepository {
            
                 return { 
                     data: data.map((deck:any) => {
-                        return new Deck({
+                        const deckMounted =  new Deck({
                             id: deck.id,
                             created_at: deck.created_at,
                             name: deck.name
                         })
+                        return deckMounted.getValues() as DeckDTO
                     }),
                     status: 200
                 };
@@ -107,7 +108,7 @@ export class DeckDbSupabase implements IDeckRepository {
                 }
             }
     }
-    public async getAllDecks(): Promise<ApiResponse<Deck[]>> {
+    public async getAllDecks(): Promise<ApiResponse<DeckDTO[]>> {
             try {
                 const { data, error } = await this.supabase.from('deck').select()
          
@@ -115,11 +116,12 @@ export class DeckDbSupabase implements IDeckRepository {
            
                 return { 
                     data: data.map((deck:any) => {
-                        return new Deck({
+                        const deckMounted =  new Deck({
                             id: deck.id,
                             created_at: deck.created_at,
                             name: deck.name
                         })
+                        return deckMounted.getValues() as DeckDTO
                     }),
                     status: 200
                 };
