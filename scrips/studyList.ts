@@ -14,7 +14,12 @@ export const variables = ref<Variables>({
       { text: "Estudar Todos", icon: "mdi-account-school", event: 'goAllCards' },
     ],
 })
+export const notStudied = computed(() => 
+    variables.value.alreadyStudied.length - variables.value.todayCards.length > 0
+    ? 0
+    : variables.value.todayCards.length - variables.value.alreadyStudied.length 
 
+)
 export const methods  = {
     refreshPage: () => {
         const router = useRouter()
@@ -27,43 +32,46 @@ export const methods  = {
         await repositotyDeck.deleteDeck(deck_id)
         router.push("/");
     },
-    clickedMenuDeck: (func:string) => {
-        // if (func == "Novo Card") {
-        //     this.$refs.addcard.dialog = true;
-        // }
+    getCardsDeck: async (deck_id:string):Promise<CardDTO[]> => {
+        const repositotyCard = useCard()
+        const { data:allCards } = await repositotyCard.getCardsByDeckId(deck_id)
 
-        // if (func == "Renomear") {
-        //     this.$refs.renameDeck.sheet = true;
-        //     this.refresh();
-        // }
-        // if (func == "Estudar Todos") {
-        //     this.$router.push(`/estudar/all-cards/${this.$route.params.deck_id}`);
-        // }
-
-        // if (func == "Apagar") {
-        //     this.$refs.confirmDelete.confirmDelete(
-        //     this.$route.params.deck_id,
-        //     "DECK " + this.info?.name
-        //     );
-        // }
+        return  (allCards) ? allCards: []
     },
+    getInfoDeck: async (deck_id:string)=> {
+        const repositotyDeck = useDeck()
+   
+        
+        const { data:InfoDeck } =  await repositotyDeck.getDeckById(deck_id)
+        return  (InfoDeck && InfoDeck.length > 0) ? InfoDeck[0]: {}
+    },
+    getCardsToday: async (deck_id:string):Promise<CardDTO[]> => {
+        const repositotyCard = useCard()
+
+        const { data:todayCards } = await repositotyCard.getCardsToday(deck_id)
+
+        return  (todayCards) ? todayCards: []
+    },
+    getCardsStudied: async (deck_id:string):Promise<CardDTO[]> => {
+        const repositotyCard = useCard()
+        const { data:alreadyStudied } = await repositotyCard.getCardsAlreadyStudied(deck_id)
+   
+        return  (alreadyStudied) ? alreadyStudied: []
+    },
+
     refresh: async (deck_id:string) => {
         variables.value.loading = true;
         const repositotyDeck = useDeck()
         const repositotyCard = useCard()
         
-        variables.value.info = await repositotyDeck.getDeckById(deck_id)
+        variables.value.info =  await methods.getInfoDeck(deck_id)
+  
+        variables.value.allCards  = await methods.getCardsDeck(deck_id)
 
-        const { data:allCards } = await repositotyCard.getCardsByDeckId(deck_id)
-        if(allCards) variables.value.allCards  = allCards
+        variables.value.todayCards  =  await methods.getCardsToday(deck_id)
         
-            
-        const { data:todayCards } = await repositotyCard.getCardsToday(deck_id)
-        if(todayCards) variables.value.todayCards  = todayCards
-   
-        const { data:alreadyStudied } = await repositotyCard.getCardsAlreadyStudied(deck_id)
-        if(alreadyStudied) variables.value.alreadyStudied   = alreadyStudied
-     
+        variables.value.alreadyStudied  =  await methods.getCardsStudied(deck_id)
+
         variables.value.loading = false;
     },
 }

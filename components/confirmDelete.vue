@@ -1,15 +1,25 @@
+<script setup>
+import { variables, methods } from "@/scrips/confirmDelete";
+
+const emit = defineEmits(["delete"]);
+
+const handleDelete = () => {
+  methods.deleteItem(emit);
+};
+</script>
+
 <template>
-  <v-bottom-sheet v-model="snackbar.active">
+  <v-bottom-sheet v-model="variables.active">
     <v-card height="200" class="rounded-t-xl">
       <div class="d-flex justify-space-between pa-2">
-        <b class="w-100 text-center">Confirmação de exclusão </b>
+        <b class="w-100 text-center">Confirmação de exclusão</b>
       </div>
 
       <VCardText>
         <p>
-          <b> {{ snackbar.text }}</b
+          <b>{{ variables.text }}</b
           ><br />
-          Os dados excluídos serão apagados permanentemente e não poderão ser recuperados.
+          Os dados excluídos serão apagados permanentemente.
         </p>
         <div class="d-flex mt-4">
           <VBtn
@@ -18,7 +28,7 @@
             color=""
             height="50"
             variant="tonal"
-            @click="snackbar.active = false"
+            @click="variables.active = false"
           >
             CANCELAR
           </VBtn>
@@ -29,7 +39,7 @@
             color="error"
             height="50"
             variant="tonal"
-            @click="detele()"
+            @click="handleDelete"
           >
             APAGAR
           </VBtn>
@@ -38,34 +48,3 @@
     </v-card>
   </v-bottom-sheet>
 </template>
-
-<script>
-export default {
-  data() {
-    return {
-      snackbar: {
-        active: false,
-        text: "",
-        value: "",
-      },
-    };
-  },
-  methods: {
-    confirmDelete(id, name) {
-      this.snackbar = {
-        active: true,
-        text: `Tem certeza de que deseja excluir: ${name} ?`,
-        value: id,
-      };
-    },
-    detele() {
-      this.$emit("delete", this.snackbar.value);
-      this.snackbar = {
-        active: false,
-        text: "",
-        value: "",
-      };
-    },
-  },
-};
-</script>

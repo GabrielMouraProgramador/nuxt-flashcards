@@ -1,10 +1,14 @@
+<script setup>
+import { methods as methodsNewCard } from "@/scrips/formCard";
+</script>
+
 <template>
   <div class="grid">
     <div class="d-flex flex-column">
       <VIcon size="40" class="ma-auto">mdi-cards</VIcon>
       <p>Este deck não tem cartões</p>
       <VBtn
-        @click="$emit('clicked')"
+        @click="methodsNewCard.showForm('CREATE')"
         color="#ffffff"
         variant="flat"
         rounded="xl"

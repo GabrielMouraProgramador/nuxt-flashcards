@@ -8,7 +8,7 @@
 
     <v-toolbar-items class="pr-2">
       <Menu
-        @newCard="variablesNewCard.showDialog = true"
+        @newCard="methodsNewCard.showForm('CREATE')"
         @renameDeck="variablesRenameDeck.showDialog = true"
         :menu_items="variables.menuDeck"
       />
@@ -17,6 +17,6 @@
 </template>
 <script setup>
 import { variables } from "@/scrips/studyList";
-import { variables as variablesNewCard } from "@/scrips/createCard";
+import { methods as methodsNewCard } from "@/scrips/formCard";
 import { variables as variablesRenameDeck } from "@/scrips/renameDeck";
 </script>

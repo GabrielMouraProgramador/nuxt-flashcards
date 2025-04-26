@@ -19,7 +19,6 @@
           <template v-slot:prepend>
             <v-icon :icon="item.icon"></v-icon>
           </template>
-
           <v-list-item-title v-text="item.text"></v-list-item-title>
         </v-list-item>
       </v-list>
@@ -29,7 +28,7 @@
 
 <script>
 export default {
-  props: ["menu_items"],
+  props: ["menu_items", "value"],
   data() {
     return {
       fav: true,
@@ -42,11 +41,7 @@ export default {
   },
   methods: {
     setAcao(item) {
-      this.$emit(
-        "clicked",
-        this.item != undefined ? { text: item.text, item: this.item } : item.text
-      );
-      this.$emit(item.event, item);
+      this.$emit(item.event, this.value);
     },
   },
 };

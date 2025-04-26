@@ -1,15 +1,28 @@
+<script setup>
+import { variables, notStudied } from "@/scrips/studyList";
+</script>
+
 <template>
   <VCard rounded="xl" class="pa-4 bg-card mt-4">
     <div class="d-flex justify-space-between align-center mb-2">
-      <span class="title">{{ info?.name }}</span>
+      <span class="title">{{ variables.info?.name }}</span>
 
-      <VBtn @click="setEye()" :icon="eye ? 'mdi-eye' : 'mdi-eye-off'"> </VBtn>
+      <VBtn
+        @click="variables.answers = !variables.answers"
+        :icon="variables.answers ? 'mdi-eye' : 'mdi-eye-off'"
+      >
+      </VBtn>
     </div>
     <span class="mode">Modo de aprendizado: <span>Repetição espaçada geral</span></span>
     <h3 class="my-2">Cartões para hoje</h3>
     <div class="d-flex bg-grid">
-      <div :class="['total-cards', { 'total-cards-large': todayCards > 99 }]">
-        {{ todayCards }}
+      <div
+        :class="[
+          'total-cards',
+          { 'total-cards-large': variables.todayCards.length > 99 },
+        ]"
+      >
+        {{ variables.todayCards.length }}
       </div>
       <div class="mx-4 center">
         <div class="d-flex">
@@ -23,13 +36,13 @@
         <div class="d-flex">
           <VIcon size="35" color="success" class="mr-1">mdi-school</VIcon>
 
-          <p class="n-estudado">{{ review }}</p>
+          <p class="n-estudado">{{ variables.alreadyStudied.length }}</p>
         </div>
         <p class="descricao">Revisados</p>
       </div>
     </div>
     <VBtn
-      :disabled="todayCards <= 0"
+      :disabled="variables.todayCards.length <= 0"
       :to="`/estudar/${$route.params.deck_id}`"
       rounded="lg"
       class="mt-5"
@@ -40,27 +53,12 @@
     >
       <b>Estudar cartões</b></VBtn
     >
-    <span v-if="todayCards < 1" class="mode"
+    <span v-if="variables.todayCards.length < 1" class="mode"
       ><b>Parabéns:</b> Você está em dia com seus cards e seus estudos 😀</span
     >
   </VCard>
 </template>
-<script>
-export default {
-  props: ["info", "todayCards", "notStudied", "review"],
-  data() {
-    return {
-      eye: false,
-    };
-  },
-  methods: {
-    setEye() {
-      this.eye = !this.eye;
-      this.$emit("eye", this.eye);
-    },
-  },
-};
-</script>
+
 <style scoped>
 .title {
   font-size: 16px;

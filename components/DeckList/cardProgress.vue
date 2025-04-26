@@ -1,9 +1,16 @@
+<script setup>
+import { variables, notStudied } from "@/scrips/studyList";
+</script>
 <template>
-  <h3 class="mt-2">Cartões no deck ({{ allCards }})</h3>
+  <h3 class="mt-2">Cartões no deck ({{ variables.allCards.length }})</h3>
   <v-progress-linear
     buffer-value="60"
-    :color="(studiedCards * 100) / allCards == 100 ? 'success' : '#282725'"
-    :model-value="(studiedCards * 100) / allCards"
+    :color="
+      (variables.alreadyStudied.length * 100) / variables.allCards.length == 100
+        ? 'success'
+        : '#282725'
+    "
+    :model-value="(variables.alreadyStudied.length * 100) / variables.allCards.length"
     :height="10"
     rounded
     stream
@@ -15,15 +22,11 @@
     </div>
     <div class="p-revisar d-flex">
       <p></p>
-      <span> {{ studiedCards }} Estudados </span>
+      <span> {{ variables.alreadyStudied.length }} Estudados </span>
     </div>
   </div>
 </template>
-<script>
-export default {
-  props: ["allCards", "studiedCards", "notStudied"],
-};
-</script>
+
 <style scoped>
 .n-estudado p {
   width: 10px;

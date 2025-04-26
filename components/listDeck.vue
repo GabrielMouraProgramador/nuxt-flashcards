@@ -15,7 +15,7 @@ onMounted(() => {
           :key="deck.name"
           :subtitle="useFormat.date(deck.created_at)"
           :title="deck.name"
-          :to="`/deck-list/${deck.id}`"
+          :to="`/cards/${deck.id}`"
         >
           <template v-slot:append>
             <v-btn color="grey-lighten-1" icon="mdi-chevron-right" variant="text"></v-btn>
