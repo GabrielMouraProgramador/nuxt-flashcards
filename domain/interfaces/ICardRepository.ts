@@ -7,7 +7,7 @@ export interface ApiResponse<T = any> {
 }
 export interface CardDTO {
     id: string | null
-    created_at: string | undefined
+    created_at: string 
     difficulty: string
     last_time: string
     deck_id: string
@@ -15,7 +15,6 @@ export interface CardDTO {
     behind: string
     next_game: string
 }
-
 
 
 export interface ICardRepository{

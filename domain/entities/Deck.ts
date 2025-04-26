@@ -36,11 +36,11 @@ export class Deck {
     private static generateTimestamp(): string {
         const now = new Date()
         const iso = now.toISOString() // Ex: "2025-03-29T01:42:24.140Z"
-    
+
         // Ajusta para o formato "2025-03-29 01:42:24.140000+00"
         const [date, time] = iso.split('T')
         const [seconds, msZ] = time.split('.')
         const ms = msZ.slice(0, 3) // pega os milissegundos
         return `${date} ${seconds}.${ms}000+00`
-      }
+    }
 }

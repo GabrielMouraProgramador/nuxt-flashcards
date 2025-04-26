@@ -1,58 +1,16 @@
 <script setup>
-definePageMeta({
-  layout: "empty",
-});
+import { variables } from "@/scrips/studyList";
 </script>
-
 <template>
   <v-card rounded="0" height="100%" class="bg-card">
-    <v-toolbar density="compact" color="#201c1d">
-      <v-btn to="/">
-        <VIcon size="25">mdi-arrow-left</VIcon>
-      </v-btn>
-
-      <v-spacer></v-spacer>
-
-      <v-toolbar-items class="pr-2">
-        <Menu @clicked="clickedMenuDeck" :itemsMenu="menuDeck" ref="menuDeck" />
-      </v-toolbar-items>
-    </v-toolbar>
-    <div v-if="!loading">
-      <div v-if="allCards && allCards.length" class="pa-2">
-        <SumaryCard
-          @eye="setAnswers"
-          :info="info"
-          :todayCards="todayCards.length"
-          :notStudied="
-            alreadyStudied.length - todayCards.length > 0
-              ? 0
-              : todayCards.length - alreadyStudied.length
-          "
-          :review="alreadyStudied.length"
-        />
-
-        <CardProgress
-          :allCards="allCards.length"
-          :notStudied="
-            alreadyStudied.length - todayCards.length < 0
-              ? 0
-              : alreadyStudied.length - todayCards.length
-          "
-          :studiedCards="alreadyStudied.length"
-        />
-        <ListCard @refresh="refresh()" :cards="allCards" :answers="answers" />
-      </div>
-      <div v-else class="grid">
-        <NoCards @clicked="$refs.addcard.dialog = true" />
-      </div>
-      <AddCard @refresh="refresh()" ref="addcard" />
+    <DeckListToolbar />
+    <div v-if="!variables.loading">
+      <DeckListBody v-if="variables.allCards && variables.allCards.length" />
+      <DeckListNoCards v-else />
     </div>
-    <VCard v-else rounded="xl" class="ma-2 mt-5">
-      <v-skeleton-loader
-        type="list-item-two-line, image, table-tfoot"
-      ></v-skeleton-loader>
-    </VCard>
-    <RenameDeck ref="renameDeck" @refresh="refreshPage()" />
+    <DeckListSkeleton v-else />
+    <DeckListAddCard @refresh="refresh()" ref="addcard" />
+    <DeckListRenameDeck ref="renameDeck" @refresh="refreshPage()" />
     <ConfirmDelete ref="confirmDelete" @delete="deteleDeck" />
   </v-card>
 </template>
@@ -79,7 +37,7 @@ export default {
 
   async created() {
     if (this.$route.params.deck_id) {
-      this.refresh();
+      // this.refresh();
     }
   },
 
@@ -134,13 +92,6 @@ export default {
 </script>
 
 <style scoped>
-.grid {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
 .bg-card {
   background: #0f0f0f;
 }

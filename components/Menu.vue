@@ -1,7 +1,7 @@
 <template>
   <v-menu v-model="menu">
     <template v-slot:activator="{ props }">
-      <v-btn size="40" class="ma-auto" :ripple="false" v-bind="props">
+      <v-btn size="40" class="ma-auto" rounded="lg" :ripple="false" v-bind="props">
         <VIcon size="25">mdi-dots-vertical</VIcon>
       </v-btn>
     </template>
@@ -29,7 +29,7 @@
 
 <script>
 export default {
-  props: ["itemsMenu", "item"],
+  props: ["menu_items"],
   data() {
     return {
       fav: true,
@@ -37,7 +37,7 @@ export default {
       message: false,
       hints: true,
       selected: null,
-      items: this.itemsMenu || [],
+      items: this.menu_items || [],
     };
   },
   methods: {
@@ -46,6 +46,7 @@ export default {
         "clicked",
         this.item != undefined ? { text: item.text, item: this.item } : item.text
       );
+      this.$emit(item.event, item);
     },
   },
 };
