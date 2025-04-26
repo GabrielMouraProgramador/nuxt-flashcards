@@ -1,49 +1,21 @@
 <script setup>
-definePageMeta({
-  layout: "empty",
+import { variables, methods, currentCard } from "@/scrips/study";
+
+onMounted(() => {
+  const route = useRoute();
+  methods.cardsToday(route.params.deck_id);
 });
 </script>
 
 <template>
   <v-card rounded="0" height="100%" class="bg-page">
-    <v-toolbar density="compact" color="#201c1d">
-      <v-btn to="/">
-        <VIcon size="25">mdi-close</VIcon>
-      </v-btn>
-
-      <v-spacer></v-spacer>
-      <VChip size="small">{{ atual }}/{{ cards.length }}</VChip>
-      <v-spacer></v-spacer>
-
-      <v-toolbar-items class="pr-2">
-        <Menu
-          @clicked="clickedMenuDeck"
-          :itemsMenu="menuItem"
-          :item="currentCard"
-          ref="menuItem"
-        />
-      </v-toolbar-items>
-    </v-toolbar>
-
+    <EstudarToobar />
     <VCard rounded="xl" class="pa-4 m-4 bg-card">
-      <FlipCard
-        ref="flip"
-        @next="liberaDificuldade"
-        :card="currentCard"
-        class="mb-flip"
-      />
-      <Dificuldade @nextCard="nextCatd" ref="dificuldade" @backCard="backCard()" />
-      <div class="d-flex justify-end">
-        <VBtn
-          v-if="next"
-          @click="$refs.dificuldade.sheet = true"
-          icon="mdi-chevron-right"
-        >
-        </VBtn>
-      </div>
+      <EstudarFlipCard :card="currentCard" class="mb-flip" />
+      <EstudarDificuldade />
+      <EstudarActions />
     </VCard>
-    <ConfirmDelete ref="confirmDelete" @delete="deteleCard" />
-    <EditCard @refresh="refresh()" ref="editcard" />
+    <ConfirmDelete />
   </v-card>
 </template>
 
@@ -58,30 +30,30 @@ export default {
       { text: "Apagar", icon: "mdi-delete" },
     ],
   }),
-  computed: {
-    currentCard() {
-      if (this.cards && this.cards.length > 0 && this.cards.length > this.atual) {
-        const current = this.cards[this.atual];
+  // computed: {
+  //   currentCard() {
+  //     if (this.cards && this.cards.length > 0 && this.cards.length > this.atual) {
+  //       const current = this.cards[this.atual];
 
-        const difficulty_times = getNextTime(
-          current.difficulty,
-          current.ultimo_tempo,
-          current.difficulty
-        );
+  //       const difficulty_times = getNextTime(
+  //         current.difficulty,
+  //         current.ultimo_tempo,
+  //         current.difficulty
+  //       );
 
-        this.$refs.dificuldade.facil = difficulty_times.facil;
-        this.$refs.dificuldade.bom = difficulty_times.bom;
-        this.$refs.dificuldade.dificil = difficulty_times.dificil;
-        this.$refs.dificuldade.agora = difficulty_times.agora;
+  //       this.$refs.dificuldade.facil = difficulty_times.facil;
+  //       this.$refs.dificuldade.bom = difficulty_times.bom;
+  //       this.$refs.dificuldade.dificil = difficulty_times.dificil;
+  //       this.$refs.dificuldade.agora = difficulty_times.agora;
 
-        return current;
-      }
-      return "";
-    },
-  },
+  //       return current;
+  //     }
+  //     return "";
+  //   },
+  // },
   async created() {
     if (this.$route.params.deck_id) {
-      this.cardsToday();
+      // this.cardsToday();
     }
   },
   mounted() {
@@ -121,7 +93,6 @@ export default {
         this.$refs.editcard.dialog == false &&
         this.$refs.confirmDelete.snackbar.active == false
       ) {
-        console.log(this.$refs.editcard.dialog, this.$refs.confirmDelete.snackbar.active);
         if (event.key === "Enter") {
           this.$refs.flip.rotate = true;
           this.$refs.dificuldade.sheet = true;

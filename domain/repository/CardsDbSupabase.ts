@@ -106,7 +106,7 @@ export class CardsDbSupabase implements ICardRepository {
                 .update({
                     difficulty: difficulty,
                     next_game: next_game,
-                    last_time: last_time,
+                    ultimo_tempo: last_time,
                 } as never).eq('id', card.getCardId());
 
             if (error) {

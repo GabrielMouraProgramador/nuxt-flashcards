@@ -1,67 +1,58 @@
+<script setup lang="ts">
+import type { CardDTO } from "~/domain/interfaces/ICardRepository";
+import { variables, methods } from "@/scrips/study";
+const emit = defineEmits(["next"]);
+const props = defineProps<{
+  card: CardDTO;
+}>();
+
+// watch: {
+//     async card(newCard) {
+//       const { getUrlFile } = useStorage();
+
+//       const { deck_id, imageFrente, imageTras } = newCard;
+
+//       getUrlFile(deck_id, imageTras).then((result) => {
+//         this.imageTras = result ? result : "";
+//       });
+//       getUrlFile(deck_id, imageFrente).then((result) => {
+//         this.imageFrente = result ? result : "";
+//       });
+//     },
+//   },
+</script>
+
 <template>
-  <div class="flip-card" @click="flip()">
-    <div class="flip-card-inner" :class="{ rotated: rotate }">
+  <div class="flip-card" @click="methods.flip()">
+    <div class="flip-card-inner" :class="{ rotated: variables.flip.rotate }">
       <VCard rounded="xl" class="flip-card-front">
         <div class="w-100 pa-4">
           <p class="mb-10">
-            {{ card?.frete }}
+            {{ card.front }}
           </p>
-          <v-img
+          <!-- <v-img
             v-if="imageFrente"
             :max-width="800"
             aspect-ratio="16/9"
             cover
             :src="imageFrente"
             class="mx-auto img"
-          ></v-img>
+          ></v-img> -->
         </div>
       </VCard>
       <VCard rounded="xl" class="flip-card-back">
         <div class="w-100 pa-4">
           <p class="mb-10">
-            {{ card?.tras }}
+            {{ card.behind }}
           </p>
-          <div>
+          <!-- <div>
             <v-img v-if="imageTras" cover :src="imageTras" class="mx-auto img"></v-img>
-          </div>
+          </div> -->
         </div>
       </VCard>
     </div>
   </div>
 </template>
-
-<script>
-export default {
-  props: ["card"],
-  data() {
-    return {
-      rotate: false,
-      imageTras: "",
-      imageFrente: "",
-    };
-  },
-  watch: {
-    async card(newCard) {
-      const { getUrlFile } = useStorage();
-
-      const { deck_id, imageFrente, imageTras } = newCard;
-
-      getUrlFile(deck_id, imageTras).then((result) => {
-        this.imageTras = result ? result : "";
-      });
-      getUrlFile(deck_id, imageFrente).then((result) => {
-        this.imageFrente = result ? result : "";
-      });
-    },
-  },
-  methods: {
-    flip() {
-      this.rotate = !this.rotate;
-      this.$emit("next", this.card);
-    },
-  },
-};
-</script>
 
 <style scoped>
 .flip-card {
