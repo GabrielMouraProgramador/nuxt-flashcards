@@ -45,7 +45,7 @@ export const currentCard = computed(() => {
 })
 export const methods  = {
     cardsToday: async (deck_id:string) => {
-        variables.value.cards = await methodsCards.getCardsToday(deck_id)
+        variables.value.cards = useShuffle(await methodsCards.getCardsToday(deck_id))
     },
     flip: () => {
         variables.value.flip.rotate = !variables.value.flip.rotate;
@@ -125,7 +125,11 @@ export const methods  = {
             agora: "agora",
             card_id: "",
         }
-    }
+    },
+    refreshPage: () => {
+        const router = useRouter()
+        router.go(0);
+    },
 }
 interface difficulty {
     level: string,

@@ -43,8 +43,6 @@ onMounted(() => {
         </v-list-item>
       </div>
     </v-list>
-
-    <ConfirmDelete ref="confirmDelete" @delete="methods.deteleCard" />
   </v-card>
 </template>
 

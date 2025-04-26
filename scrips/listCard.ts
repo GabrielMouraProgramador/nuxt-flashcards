@@ -42,6 +42,7 @@ export const methods  = {
     deteleCard: async (card_id:string) => {
         const repositotyCard = useCard()
         await repositotyCard.deleteCard(card_id)
+        methods.refreshPage()
     },
     refresh: async (deck_id:string) =>  {
         variables.value.loading = true;
@@ -50,9 +51,12 @@ export const methods  = {
         variables.value.loading = false;
     },
     confirmDeleteCard: (card:CardDTO) => {
-        methodsDelete.confirmDelete(card.id || '', card.front)
-     
-    }
+        methodsDelete.confirmDelete(card.id || '', card.front, () => methods.deteleCard(card.id || '') )
+    },
+    refreshPage: () => {
+        const router = useRouter()
+        router.go(0);
+    },
 }
 
 interface MenuItem {

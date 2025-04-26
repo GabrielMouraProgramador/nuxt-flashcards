@@ -1,17 +1,23 @@
 import type { CardDTO } from "~/domain/interfaces/ICardRepository"
+import { variables as variablesDelete, methods as methodsDelete  } from "@/scrips/confirmDelete";
+import type { DeckDTO } from "~/domain/interfaces/IDeckRepository";
 
 export const variables = ref<Variables>({
     answers: false,
     allCards: [],
     alreadyStudied: [],
     todayCards: [],
-    info: {},
+    info: {
+        id: '',
+        name:'',
+        created_at: ''
+    },
     loading: true,
     menuDeck: [
       { text: "Novo Card", icon: "mdi-plus", event: 'newCard'},
       { text: "Renomear", icon: "mdi-rename", event: 'renameDeck' },
       { text: "Apagar", icon: "mdi-delete", event: 'deleteDeck' },
-      { text: "Estudar Todos", icon: "mdi-account-school", event: 'goAllCards' },
+    //   { text: "Estudar Todos", icon: "mdi-account-school", event: 'goAllCards' },
     ],
 })
 export const notStudied = computed(() => 
@@ -43,7 +49,7 @@ export const methods  = {
    
         
         const { data:InfoDeck } =  await repositotyDeck.getDeckById(deck_id)
-        return  (InfoDeck && InfoDeck.length > 0) ? InfoDeck[0]: {}
+        return  (InfoDeck && InfoDeck.length > 0) ? InfoDeck[0]: {} as DeckDTO
     },
     getCardsToday: async (deck_id:string):Promise<CardDTO[]> => {
         const repositotyCard = useCard()
@@ -74,6 +80,9 @@ export const methods  = {
 
         variables.value.loading = false;
     },
+    confirmDeleteDeck: () => {
+        methodsDelete.confirmDelete(variables.value.info.id || '', variables.value.info.name,() => methods.deleteDeck(variables.value.info.id || ''))
+    },
 }
 
 interface MenuItem {
@@ -87,7 +96,7 @@ interface Variables {
     allCards: CardDTO[],
     alreadyStudied: CardDTO[],
     todayCards:CardDTO[],
-    info: {},
+    info: DeckDTO,
     loading: boolean,
     menuDeck:MenuItem[]
 }

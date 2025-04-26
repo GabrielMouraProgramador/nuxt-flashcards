@@ -10,13 +10,14 @@
       <Menu
         @newCard="methodsNewCard.showForm('CREATE')"
         @renameDeck="variablesRenameDeck.showDialog = true"
+        @deleteDeck="methods.confirmDeleteDeck()"
         :menu_items="variables.menuDeck"
       />
     </v-toolbar-items>
   </v-toolbar>
 </template>
 <script setup>
-import { variables } from "@/scrips/studyList";
+import { variables, methods } from "@/scrips/studyList";
 import { methods as methodsNewCard } from "@/scrips/formCard";
 import { variables as variablesRenameDeck } from "@/scrips/renameDeck";
 </script>

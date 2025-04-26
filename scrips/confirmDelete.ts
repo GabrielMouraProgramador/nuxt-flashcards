@@ -6,18 +6,25 @@ export const variables = ref<Variables>({
     value: "",
 })
 
+let onConfirm: (() => void) | null = null;
 
 export const methods  = {
-    confirmDelete: (id:string, name:string) => {
+    confirmDelete: (id:string, name:string, callback: () => void) => {
         variables.value = {
             active: true,
             text: `Tem certeza de que deseja excluir: ${name} ?`,
             value: id,
         };
+        onConfirm = callback;
     },
       
     deleteItem: (emit: EmitFn)  => {
-        emit("delete", variables.value.value);
+        if (onConfirm) {
+            onConfirm();
+            onConfirm = null;
+        }
+
+
         variables.value = {
             active: false,
             text: "",

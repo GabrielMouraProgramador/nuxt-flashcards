@@ -42,7 +42,7 @@ export class DeckDbSupabase implements IDeckRepository {
     public async renameDeck(deck: Deck): Promise<ApiResponse> {
         try {
             const { error } = await this.supabase
-                .from('deck').update({name: deck.getName()} as never)
+                .from('deck').update({name: deck.getName()} as never).eq('id',deck.getDeckId())
 
             
             if (error ) {

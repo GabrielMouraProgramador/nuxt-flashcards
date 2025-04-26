@@ -26,6 +26,7 @@ export const methods  = {
             front: variables.value.front.text,
             behind: variables.value.behind.text,
         }))
+        methods.refreshPage()
     },
     updateCard: async (deck_id:string) => {
         const repositotyCard = useCard()
@@ -36,6 +37,7 @@ export const methods  = {
             front: variables.value.front.text,
             behind: variables.value.behind.text,
         }))
+        methods.refreshPage()
     },
     activeMethod: (deck_id:string) => {
         if(variables.value.typeAction === 'CREATE') methods.addCard(deck_id)
@@ -56,7 +58,11 @@ export const methods  = {
             text: "",
             file: null,
         }
-    }
+    },
+    refreshPage: () => {
+        const router = useRouter()
+        router.go(0);
+    },
 }
 
 watch(
