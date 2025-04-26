@@ -5,7 +5,7 @@ export class Card{
     private readonly front: string
     private readonly behind: string
     private readonly difficulty: string= 'facil'
-    private readonly next_game: string
+    private  next_game:string =  Card.generateTimestamp()
     private readonly last_time: string = '1d'
 
     
@@ -14,27 +14,27 @@ export class Card{
         created_at?: string,
         difficulty?: string,
         last_time?: string,
+        next_game?: string
+        
         deck_id: string,
         front: string,
         behind: string,
-        next_game: string
-
     }){
         if(!data.deck_id) throw new Error('O card não contem deck informado')
         if(!data.front) throw new Error('O não contem conteudo na frete')
         if(!data.behind) throw new Error('O não contem conteudo atras')
-        if(!data.next_game) throw new Error('O não contem data do proximo jogo')
 
             
         this.deck_id = data.deck_id
         this.front = data.front
         this.behind = data.behind
-        this.next_game = data.next_game
+
 
         if(data.id) this.id = data.id
         if(data.difficulty) this.difficulty = data.difficulty
         if(data.last_time) this.last_time = data.last_time
         if(data.created_at) this.created_at = data.created_at
+        if(data.next_game) this.next_game = data.next_game
 
     }
     public getValues(){
