@@ -17,11 +17,11 @@ export class CardsDbSupabase implements ICardRepository {
                 .insert([
                     {
                         deck_id: deck_id,
-                        front: front,
-                        behind: behind,
+                        frete: front,
+                        tras: behind,
                         difficulty: difficulty,
                         next_game: next_game,
-                        last_time: last_time,
+                        ultimo_tempo: last_time,
                     }
                 ] as any).select()
 
@@ -52,11 +52,11 @@ export class CardsDbSupabase implements ICardRepository {
                 .from('cards') 
                 .update({
                     deck_id: deck_id,
-                    front: front,
-                    behind: behind,
+                    frete: front,
+                    tras: behind,
                     difficulty: difficulty,
                     next_game: next_game,
-                    last_time: last_time,
+                    ultimo_tempo: last_time,
                 } as never).eq('id', card.getCardId());
 
     
