@@ -58,8 +58,28 @@ export const methods  = {
         variables.value.next = false;
     },
     saveDifficulty: (card:Card) => {
+        console.log(card)
         const repositoryCard = useCard()
         repositoryCard.updateDifficultyCard(card)
+    },
+    getNextTime(duration:string) {
+        const now = new Date();
+
+        // Regex para extrair valor e unidade
+        const match = duration.match(/(\d+)([dhm])/);
+        if (!match) throw new Error("Formato de duração inválido");
+
+        const value = parseInt(match[1]);
+        const unit = match[2];
+
+        if (unit === "d") now.setDate(now.getDate() + value);
+        if (unit === "h") now.setHours(now.getHours() + value);
+        if (unit === "m") now.setMinutes(now.getMinutes() + value);
+
+        // Formatar para o padrão desejado
+        const formatted = now.toISOString().replace("T", " ").replace("Z", "").slice(0, -3); // Removendo 'Z' e reduzindo precisão
+
+        return formatted;
     },
     setDifficulty: async (difficulty:difficulty) => {
 
@@ -73,7 +93,7 @@ export const methods  = {
             created_at: card.created_at,
             difficulty: difficulty.level,
             last_time: difficulty.last_time,
-            next_game: card.next_game,
+            next_game: methods.getNextTime(difficulty.last_time),
             deck_id: card.deck_id,
             front: card.front,
             behind: card.behind,
