@@ -37,5 +37,15 @@ O aprendizado baseado em **flashcards** é uma das técnicas mais poderosas para
 ### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/opencards.git
-cd opencards
+
+SUPABASE_URL=""
+SUPABASE_KEY=""
+SUPABASE_SERVICE_KEY=""
+
+npm install
+
+npm run build 
+    ou 
+npm run start
+
+---
