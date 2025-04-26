@@ -5,15 +5,14 @@ export class StorageSupabase implements IStorage{
     private supabase: ReturnType<typeof useSupabaseClient>;
 
     private allowedMimeTypes: string[] = [
-        'image/*',            // Imagens (qualquer formato)
-        'text/plain',         // Arquivos de texto (.txt)
-        'application/pdf',    // PDFs (.pdf)
-        'application/msword', // Documentos do Word (.doc)
-        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', // Documentos do Word (.docx)
-        'application/vnd.ms-excel', // Planilhas do Excel (.xls)
-        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Planilhas do Excel (.xlsx)
+        'image/*',       
+        'text/plain',        
+        'application/pdf',    
+        'application/msword', 
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+        'application/vnd.ms-excel', 
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     ];
-
     constructor(){
         this.supabase = useSupabaseClient();
     }
@@ -24,7 +23,7 @@ export class StorageSupabase implements IStorage{
                 {
                 public: true,
                 allowedMimeTypes:this.allowedMimeTypes,
-                fileSizeLimit: 50428800 // 100 × 1024 × 1024bytes = 50 MB
+                fileSizeLimit: 50428800
                 }
             );
               
