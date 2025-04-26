@@ -1,75 +1,41 @@
-# Nuxt Minimal Starter
+# 🧠 OpenCards - Flashcards para Aprender Melhor
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+**OpenCards** é uma versão open-source inspirada no Anki, criada para facilitar o aprendizado através da repetição espaçada com flashcards.  
+Feito 100% em [Nuxt 3](https://nuxt.com/), seguindo as melhores práticas de mercado, princípios **DDD (Domain-Driven Design)** e **SOLID**, para garantir um código limpo, escalável e de alta qualidade.
 
-## Setup
+O projeto utiliza [Supabase](https://supabase.com/) como backend para:
+- **Autenticação** de usuários
+- **Armazenamento** de dados
+- **Storage** de arquivos (caso você adicione imagens nos flashcards)
 
-Make sure to install dependencies:
+---
 
-```bash
-# npm
-npm install
+## ✨ Vantagens do Aprendizado com Flashcards
 
-# pnpm
-pnpm install
+O aprendizado baseado em **flashcards** é uma das técnicas mais poderosas para fixação de conteúdo, especialmente por causa do método de **repetição espaçada**.
 
-# yarn
-yarn install
+**Principais benefícios:**
+- 📈 Melhora significativa na retenção de informações
+- ⏳ Economia de tempo, focando no que você realmente precisa estudar
+- 🧠 Ativação da memória ativa, reforçando o processo de memorização
+- 🔥 Ideal para concursos, certificações, línguas estrangeiras e habilidades técnicas
+- 🧩 Flexível, adaptável a qualquer tipo de conteúdo
 
-# bun
-bun install
-```
+---
 
-## Development Server
+## 🚀 Tecnologias Utilizadas
 
-Start the development server on `http://localhost:3000`:
+- [Nuxt 3](https://nuxt.com/) — Framework Vue 3 para aplicações modernas
+- [Supabase](https://supabase.com/) — Backend open-source completo
+- [TypeScript](https://www.typescriptlang.org/) — Tipagem estática segura
+- Arquitetura baseada em **DDD** e princípios **SOLID**
 
-```bash
-# npm
-npm run dev
+---
 
-# pnpm
-pnpm dev
+## 🛠️ Como Rodar o Projeto
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
+### 1. Clone o repositório
 
 ```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+git clone https://github.com/seu-usuario/opencards.git
+cd opencards
