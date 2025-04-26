@@ -1,7 +1,7 @@
 import { Card } from "~/domain/entities/Card"
 
 export const variables = ref<Variables>({
-    showDialog: true,
+    showDialog: false,
     front: {
         text: "",
         file: null,
