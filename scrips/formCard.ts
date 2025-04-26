@@ -1,4 +1,5 @@
 import { Card } from "~/domain/entities/Card"
+import type { CardDTO } from "~/domain/interfaces/ICardRepository"
 
 export const variables = ref<Variables>({
     showDialog: false,
@@ -21,7 +22,7 @@ export const methods  = {
     addCard: async (deck_id:string) => {
         const repositotyCard = useCard()
 
-        repositotyCard.createCard(new Card({
+        await repositotyCard.createCard(new Card({
             deck_id: deck_id,
             front: variables.value.front.text,
             behind: variables.value.behind.text,
@@ -31,7 +32,7 @@ export const methods  = {
     updateCard: async (deck_id:string) => {
         const repositotyCard = useCard()
 
-        repositotyCard.updateCard(new Card({
+        await repositotyCard.updateCard(new Card({
             id: variables.value.card_id,
             deck_id: deck_id,
             front: variables.value.front.text,
@@ -39,13 +40,25 @@ export const methods  = {
         }))
         methods.refreshPage()
     },
-    activeMethod: (deck_id:string) => {
-        if(variables.value.typeAction === 'CREATE') methods.addCard(deck_id)
-        if(variables.value.typeAction === 'EDIT') methods.updateCard(deck_id)
+    activeMethod: async (deck_id:string) => {
+        if(variables.value.typeAction === 'CREATE') await  methods.addCard(deck_id)
+        if(variables.value.typeAction === 'EDIT') await methods.updateCard(deck_id)
     },
-    showForm:(action: 'CREATE'| 'EDIT') => {
+    showForm:(action: 'CREATE'| 'EDIT', card?:CardDTO) => {
+        console.log(card)
         variables.value.typeAction = action === "EDIT" ? "EDIT" : "CREATE";
         variables.value.showDialog = true
+        if(variables.value.typeAction === 'EDIT' && card  && card.id){
+            variables.value.card_id = card.id 
+            variables.value.front = {
+                text: card.front,
+                file: null,
+            }
+            variables.value.behind = {
+                text:card.behind,
+                file: null,
+            }
+        }
     },
     cleanForm: () => {
         variables.value.typeAction = 'CREATE',

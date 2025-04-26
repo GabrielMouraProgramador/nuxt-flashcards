@@ -34,7 +34,7 @@ onMounted(() => {
           </template>
           <template v-slot:append>
             <Menu
-              @EditCard="methodsNewCard.showForm('EDIT')"
+              @EditCard="methodsNewCard.showForm('EDIT', card)"
               @DeleteCard="methods.confirmDeleteCard"
               :menu_items="variables.menuDeck"
               :value="card"

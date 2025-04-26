@@ -16,6 +16,7 @@ onMounted(() => {
       <EstudarActions />
     </VCard>
     <ConfirmDelete />
+    <CardForm />
   </v-card>
 </template>
 
