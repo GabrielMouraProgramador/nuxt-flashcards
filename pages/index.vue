@@ -15,7 +15,7 @@ import { variables } from "@/scrips/home";
         icon="mdi-plus"
         variant="flat"
         class="ma-2 add-float"
-        @click="variables.home = true"
+        @click="variables.showNewDeck = true"
       ></VBtn>
     </VCard>
   </div>

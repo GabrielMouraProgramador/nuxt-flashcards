@@ -15,7 +15,7 @@ import { variables } from "@/scrips/home";
 
       <div class="d-flex">
         <VBtn
-          @click="variables.home = true"
+          @click="variables.showNewDeck = true"
           variant="flat"
           color="primary"
           size="small"

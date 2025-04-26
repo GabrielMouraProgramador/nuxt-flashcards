@@ -25,7 +25,10 @@ export const methods  = {
         await repositotyDeck.createDeck(new Deck({
             name: variables.value.newDeck.name
         }))
+        await methods.allDecks()
         variables.value.newDeck.loading = false
+        variables.value.showNewDeck = false
+        variables.value.newDeck.name = ''
     },
     allDecks: async () => {
         variables.value.list.loading = true
