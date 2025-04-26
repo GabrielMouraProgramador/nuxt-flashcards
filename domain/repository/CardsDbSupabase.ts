@@ -1,6 +1,6 @@
 
 import { Card } from "../entities/Card";
-import type { ApiResponse, ICardRepository } from "../interfaces/ICardRepository";
+import type { ApiResponse, CardDTO, ICardRepository } from "../interfaces/ICardRepository";
 
 export class CardsDbSupabase implements ICardRepository {
     private supabase: ReturnType<typeof useSupabaseClient>;
@@ -127,7 +127,7 @@ export class CardsDbSupabase implements ICardRepository {
             }
         }
     }
-    public async getCardsToday(deck_id:string): Promise<ApiResponse<Card[]>> {
+    public async getCardsToday(deck_id:string): Promise<ApiResponse<CardDTO[]>> {
         try {
             const { data, error } = await this.supabase.from('cards').select().lt('next_game', 'now()').eq('deck_id',deck_id)
      
@@ -144,7 +144,7 @@ export class CardsDbSupabase implements ICardRepository {
                         front: card.frete,
                         behind: card.tras,
                         next_game: card.next_game
-                    })
+                    }).getValues() as CardDTO
                 }),
                 status: 200
             };
@@ -157,7 +157,7 @@ export class CardsDbSupabase implements ICardRepository {
             }
         }
     }
-    public async getCardsAlreadyStudied(deck_id:string): Promise<ApiResponse<Card[]>> {
+    public async getCardsAlreadyStudied(deck_id:string): Promise<ApiResponse<CardDTO[]>> {
         try {
             const { data, error } =  await this.supabase.from('cards').select().gt('next_game', 'now()').eq('deck_id',deck_id)
      
@@ -174,7 +174,7 @@ export class CardsDbSupabase implements ICardRepository {
                         front: card.frete,
                         behind: card.tras,
                         next_game: card.next_game
-                    })
+                    }).getValues() as CardDTO
                 }),
                 status: 200
             };
@@ -187,7 +187,7 @@ export class CardsDbSupabase implements ICardRepository {
             }
         }
     }
-    public async getCardsByDeckId(deck_id:string): Promise<ApiResponse<Card[]>> {
+    public async getCardsByDeckId(deck_id:string): Promise<ApiResponse<CardDTO[]>> {
         try {
             const { data, error } = await this.supabase.from('cards').select().eq('deck_id',deck_id)
      
@@ -204,7 +204,7 @@ export class CardsDbSupabase implements ICardRepository {
                         front: card.frete,
                         behind: card.tras,
                         next_game: card.next_game
-                    })
+                    }).getValues() as CardDTO
                 }),
                 status: 200
             };
