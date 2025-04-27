@@ -24,6 +24,7 @@ export const variables = ref<Variables>({
       { text: "Editar", icon: "mdi-rename", event:'Edit' },
       { text: "Apagar", icon: "mdi-delete", event:'Delete' },
     ],
+    loading:false,
 })
 
 export const currentCard = computed(() => {
@@ -187,4 +188,5 @@ interface Variables {
     flip:{
         rotate:boolean,
     },
+    loading:boolean,
 }

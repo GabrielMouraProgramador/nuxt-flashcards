@@ -23,12 +23,30 @@ const tab = ref("frente");
         <v-tabs-window v-model="tab">
           <v-tabs-window-item value="frente">
             <v-container fluid>
-              <CardFormInputWithFile label="Parte da frente" v-model="variables.front" />
+              <CardFormInputUploadFile
+                v-if="variables.typeAction === 'CREATE'"
+                label="Parte da frente"
+                v-model="variables.front"
+              />
+              <CardFormInputShowFile
+                v-if="variables.typeAction === 'EDIT'"
+                label="Parte da frente"
+                v-model="variables.front"
+              />
             </v-container>
           </v-tabs-window-item>
           <v-tabs-window-item value="tras">
             <v-container fluid>
-              <CardFormInputWithFile label="Parte de trás" v-model="variables.behind" />
+              <CardFormInputUploadFile
+                v-if="variables.typeAction === 'CREATE'"
+                label="Parte de trás"
+                v-model="variables.behind"
+              />
+              <CardFormInputShowFile
+                v-if="variables.typeAction === 'EDIT'"
+                label="Parte da frente"
+                v-model="variables.behind"
+              />
             </v-container>
           </v-tabs-window-item>
         </v-tabs-window>

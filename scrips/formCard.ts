@@ -20,6 +20,7 @@ export const variables = ref<Variables>({
 
 export const methods  = {
     addCard: async (deck_id:string) => {
+        variables.value.loading = true
         const repositotyCard = useCard()
         const repositoryStorage = useStorage()
 
@@ -70,13 +71,13 @@ export const methods  = {
         
 
 
-        methods.refreshPage()
+        methods.cleanForm()
+        variables.value.showDialog = true
+        variables.value.loading = false
     },
     updateCard: async (deck_id:string) => {
+        variables.value.loading = true
         const repositotyCard = useCard()
-        const repositoryStorage = useStorage()
-
-     
 
         await repositotyCard.updateCard(new Card({
             id: variables.value.card_id,
@@ -84,48 +85,42 @@ export const methods  = {
             front: variables.value.front.text,
             behind: variables.value.behind.text,
         }))
-
-        // if(filefront && filefront?.name ){
-        //     await repositoryStorage.uploadFile(variables.value.card_id, filefront)
-        //     await repositotyCard.updateCard(new Card({
-        //         id: variables.value.card_id,
-        //         deck_id: deck_id,
-        //         front: variables.value.front.text,
-        //         behind: variables.value.behind.text,
-        //         fileNameFront: filefront.name,
-        //     }))
-        // }
-        // if(fileBehind && fileBehind?.name){
-        //     await repositoryStorage.uploadFile(variables.value.card_id, fileBehind)
-        //     await repositotyCard.updateCard(new Card({
-        //         id: variables.value.card_id,
-        //         deck_id: deck_id,
-        //         front: variables.value.front.text,
-        //         behind: variables.value.behind.text,
-        //         fileNameBehind: fileBehind.name,
-        //     }))
-        // } 
     
-
         methods.refreshPage()
+        variables.value.loading = false
     },
     activeMethod: async (deck_id:string) => {
         if(variables.value.typeAction === 'CREATE') await  methods.addCard(deck_id)
         if(variables.value.typeAction === 'EDIT') await methods.updateCard(deck_id)
     },
-    showForm:(action: 'CREATE'| 'EDIT', card?:CardDTO) => {
+    showForm: async(action: 'CREATE'| 'EDIT', card?:CardDTO) => {
         variables.value.typeAction = action === "EDIT" ? "EDIT" : "CREATE";
         variables.value.showDialog = true
         if(variables.value.typeAction === 'EDIT' && card  && card.id){
+
+            console.log(card)
             variables.value.card_id = card.id 
             variables.value.front = {
                 text: card.front,
-                file: [],
+                file:[],
             }
             variables.value.behind = {
                 text:card.behind,
                 file: [],
             }
+
+            const imagesCard = await methods.getImagesCard(card)
+            console.log(imagesCard)
+            Array.from(imagesCard.imgsFront).map((url) => {
+                methods.urlToFile(url as string).then((url) => {
+                  if(url) variables.value.front.file.push(url) 
+                })
+            })
+            Array.from(imagesCard.imgsBehind).map((url) => {
+                methods.urlToFile(url as string).then((url) => {
+                  if(url) variables.value.behind.file.push(url) 
+                })
+            })
         }
     },
     cleanForm: () => {
@@ -140,6 +135,7 @@ export const methods  = {
             file: [],
         }
     },
+    
     refreshPage: () => {
         const router = useRouter()
         router.go(0);
@@ -162,7 +158,35 @@ export const methods  = {
         }
         
         return new File([blob], filename, { type: contentType });
-    }
+    },
+    getImagesCard: async(card:CardDTO): Promise<{
+        imgsBehind: any,
+        imgsFront: any,
+    }> => {
+    
+            const repositoryStorage = useStorage()
+        
+            if(!card || !card.id ) throw new Error('Falha Card invalido')
+            
+            const imgsBehind = []
+            const imgsFront = []
+        console.log('[IMGS]',card.images )
+            for (const img of card.images){
+                const { data } = await repositoryStorage.getUrlFile(card.id || '', img.file_name)
+    
+                if( data?.url && img.location == 'front') {
+                    imgsFront.push(data.url)
+                }
+                if( data?.url && img.location == 'behind') {
+                    imgsBehind.push(data.url)
+                }
+            }
+            return {
+                imgsFront: imgsFront || [],
+                imgsBehind: imgsBehind || [],
+            }
+    
+        }
       
 }
 

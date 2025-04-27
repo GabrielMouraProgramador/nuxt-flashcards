@@ -12,7 +12,7 @@
   </v-textarea>
 
   <v-file-upload
-    class="mt-4"
+    :class="['mt-4']"
     v-model="inputFile"
     multiple
     type="file"
@@ -22,6 +22,7 @@
 </template>
 <script setup>
 import { VFileUpload } from "vuetify/labs/VFileUpload";
+import { variables } from "@/scrips/formCard";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -29,8 +30,6 @@ const props = defineProps({
     text: String,
     file: File,
   },
-  label: String,
-  file: File,
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -51,11 +50,14 @@ const inputFile = computed({
 });
 </script>
 
-<style scoped>
+<style>
 p {
   font-size: 12px;
 }
 :deep(.v-file-upload) {
   display: none;
+}
+.v-file-upload--density-compact {
+  display: none !important;
 }
 </style>
