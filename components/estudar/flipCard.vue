@@ -17,7 +17,7 @@ defineProps<{
           <p class="mb-10">
             {{ card.front }}
           </p>
-          <div>
+          <div class="img-grid">
             <v-img
               v-for="img in imgsFront"
               :src="img"
@@ -34,7 +34,7 @@ defineProps<{
           <p class="mb-10">
             {{ card.behind }}
           </p>
-          <div>
+          <div class="img-grid">
             <v-img
               v-for="img in imgsBehind"
               :src="img"
@@ -102,13 +102,21 @@ defineProps<{
 }
 
 .img {
-  border-radius: 30px;
+  border-radius: 10px;
   max-width: 350px !important;
+  width: 350px;
 }
 @media (max-width: 480px) {
   .img {
-    border-radius: 30px;
+    border-radius: 10px;
     max-width: 90% !important;
   }
+}
+.img-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-height: 330px;
+  overflow: auto;
 }
 </style>

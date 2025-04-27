@@ -2,6 +2,7 @@
 import { variables, methods, currentCard } from "@/scrips/study";
 
 onMounted(() => {
+  methods.resetData();
   const route = useRoute();
   methods.cardsToday(route.params.deck_id);
 });
