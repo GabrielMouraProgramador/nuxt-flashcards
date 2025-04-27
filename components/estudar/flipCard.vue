@@ -109,7 +109,7 @@ defineProps<{
 @media (max-width: 480px) {
   .img {
     border-radius: 10px;
-    max-width: 90% !important;
+    max-width: 45% !important;
   }
 }
 .img-grid {
@@ -117,6 +117,6 @@ defineProps<{
   flex-wrap: wrap;
   gap: 10px;
   max-height: 330px;
-  overflow: auto;
+  overflow-y: auto;
 }
 </style>
