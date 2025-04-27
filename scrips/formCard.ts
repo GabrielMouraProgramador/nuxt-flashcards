@@ -7,11 +7,11 @@ export const variables = ref<Variables>({
     card_id:'',
     front: {
         text: "",
-        file: null,
+        file: [],
     },
     behind:{
         text: "",
-        file: null,
+        file: [],
     },
     loading: false,
 })
@@ -23,24 +23,52 @@ export const methods  = {
         const repositotyCard = useCard()
         const repositoryStorage = useStorage()
 
-        const filefront = variables.value.front.file || null
-        const fileBehind = variables.value.behind.file || null
+        const filesFront = variables.value.front.file 
+        const filesBehind = variables.value.behind.file 
 
         const { data } = await repositotyCard.createCard(new Card({
             deck_id: deck_id,
             front: variables.value.front.text,
             behind: variables.value.behind.text,
-            fileNameFront: filefront?.name || '',
-            fileNameBehind: fileBehind?.name || '',
         }))
+
+        const cardId = (data?.id) ? data.id : null
         
-        if(data && data?.id){
-            await repositoryStorage.createBucket(data.id)
-            
-            if(filefront) await repositoryStorage.uploadFile(data.id, filefront)
-            if(fileBehind) await repositoryStorage.uploadFile(data.id, fileBehind)
-        }
+        if(!cardId) return
+
+
+        await repositoryStorage.createBucket(cardId)
+
+   
+        for (const fileFront of filesFront){
+            if(fileFront?.name){
+
+                await repositotyCard.addImageCard(
+                    cardId,
+                    fileFront.name,
+                    'front',
+                    0,
+                )
+                await repositoryStorage.uploadFile(cardId, fileFront)
+            }
+        }  
     
+
+        for (const fileBehind of filesBehind){
+            if(fileBehind?.name){
+
+                await repositotyCard.addImageCard(
+                    cardId,
+                    fileBehind.name,
+                    'behind',
+                    0,
+                )
+                await repositoryStorage.uploadFile(cardId, fileBehind)
+            }
+        }  
+
+        
+
 
         methods.refreshPage()
     },
@@ -60,26 +88,26 @@ export const methods  = {
             behind: variables.value.behind.text,
         }))
 
-        if(filefront && filefront?.name ){
-            await repositoryStorage.uploadFile(variables.value.card_id, filefront)
-            await repositotyCard.updateCard(new Card({
-                id: variables.value.card_id,
-                deck_id: deck_id,
-                front: variables.value.front.text,
-                behind: variables.value.behind.text,
-                fileNameFront: filefront.name,
-            }))
-        }
-        if(fileBehind && fileBehind?.name){
-            await repositoryStorage.uploadFile(variables.value.card_id, fileBehind)
-            await repositotyCard.updateCard(new Card({
-                id: variables.value.card_id,
-                deck_id: deck_id,
-                front: variables.value.front.text,
-                behind: variables.value.behind.text,
-                fileNameBehind: fileBehind.name,
-            }))
-        } 
+        // if(filefront && filefront?.name ){
+        //     await repositoryStorage.uploadFile(variables.value.card_id, filefront)
+        //     await repositotyCard.updateCard(new Card({
+        //         id: variables.value.card_id,
+        //         deck_id: deck_id,
+        //         front: variables.value.front.text,
+        //         behind: variables.value.behind.text,
+        //         fileNameFront: filefront.name,
+        //     }))
+        // }
+        // if(fileBehind && fileBehind?.name){
+        //     await repositoryStorage.uploadFile(variables.value.card_id, fileBehind)
+        //     await repositotyCard.updateCard(new Card({
+        //         id: variables.value.card_id,
+        //         deck_id: deck_id,
+        //         front: variables.value.front.text,
+        //         behind: variables.value.behind.text,
+        //         fileNameBehind: fileBehind.name,
+        //     }))
+        // } 
     
 
         methods.refreshPage()
@@ -95,11 +123,11 @@ export const methods  = {
             variables.value.card_id = card.id 
             variables.value.front = {
                 text: card.front,
-                file: null,
+                file: [],
             }
             variables.value.behind = {
                 text:card.behind,
-                file: null,
+                file: [],
             }
         }
     },
@@ -108,11 +136,11 @@ export const methods  = {
         variables.value.card_id = ''
         variables.value.front = {
             text: "",
-            file: null,
+            file: [],
         }
         variables.value.behind = {
             text: "",
-            file: null,
+            file: [],
         }
     },
     refreshPage: () => {
@@ -158,11 +186,11 @@ interface Variables {
     card_id:string,
     front: {
         text: string,
-        file: File | null,
+        file: File[],
     },
     behind:  {
         text: string,
-        file: File | null,
+        file: File[],
     },
     loading: boolean,
 }

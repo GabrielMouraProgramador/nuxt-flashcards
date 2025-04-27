@@ -5,29 +5,20 @@
     v-model="inputText"
     auto-grow
     density="comfortable"
+    class="mb-4"
     variant="solo-filled"
     hide-details
   >
-    <template #append-inner>
-      <label for="img-frente">
-        <VBtn @click="triggerFile" icon="mdi-image-area"> </VBtn>
-      </label>
-    </template>
   </v-textarea>
+
   <v-file-upload
-    v-if="inputFile"
+    class="mt-4"
     v-model="inputFile"
+    multiple
     type="file"
     density="compact"
     variant="compact"
   ></v-file-upload>
-  <input
-    ref="input-file-handler"
-    type="file"
-    accept="image/*"
-    style="display: none"
-    @change="onFileChangeFrente"
-  />
 </template>
 <script setup>
 import { VFileUpload } from "vuetify/labs/VFileUpload";
@@ -49,6 +40,7 @@ const inputText = computed({
   get: () => props.modelValue.text,
   set: (text) => emit("update:modelValue", { text: text, file: props.modelValue.file }),
 });
+
 const inputFile = computed({
   get: () => props.modelValue.file,
   set: (file) =>
@@ -57,17 +49,6 @@ const inputFile = computed({
       file: file,
     }),
 });
-
-const triggerFile = () => {
-  inputFileHandler.value?.click();
-};
-
-const onFileChangeFrente = (event) => {
-  const file = event.target.files;
-  if (file) {
-    props.modelValue.file = file[0];
-  }
-};
 </script>
 
 <style scoped>

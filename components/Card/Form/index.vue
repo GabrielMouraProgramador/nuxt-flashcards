@@ -1,5 +1,6 @@
 <script setup>
 import { variables, methods } from "@/scrips/formCard";
+const tab = ref("frente");
 </script>
 
 <template>
@@ -15,8 +16,22 @@ import { variables, methods } from "@/scrips/formCard";
         <v-spacer></v-spacer>
       </v-toolbar>
       <div class="pa-4">
-        <CardFormInputWithFile label="Parte da frente" v-model="variables.front" />
-        <CardFormInputWithFile label="Parte de trás" v-model="variables.behind" />
+        <v-tabs v-model="tab" align-tabs="center" color="primary">
+          <v-tab value="frente">Frente</v-tab>
+          <v-tab value="tras">Atras</v-tab>
+        </v-tabs>
+        <v-tabs-window v-model="tab">
+          <v-tabs-window-item value="frente">
+            <v-container fluid>
+              <CardFormInputWithFile label="Parte da frente" v-model="variables.front" />
+            </v-container>
+          </v-tabs-window-item>
+          <v-tabs-window-item value="tras">
+            <v-container fluid>
+              <CardFormInputWithFile label="Parte de trás" v-model="variables.behind" />
+            </v-container>
+          </v-tabs-window-item>
+        </v-tabs-window>
 
         <VBtn
           :disabled="!variables.behind.text || !variables.front.text"

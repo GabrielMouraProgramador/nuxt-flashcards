@@ -15,10 +15,16 @@ export interface CardDTO {
     behind: string
     next_game: string
 
-    fileNameFront: string,
-    fileNameBehind: string
+    images: ImgCardDTO[]
 }
-
+export interface ImgCardDTO {
+    id:string
+    card_id: string,
+    location:string,
+    file_name: string,
+    sort: number,
+    created_at: string 
+}
 
 export interface ICardRepository{
     createCard(card:Card): Promise<ApiResponse<{ id: string }>>
@@ -28,4 +34,6 @@ export interface ICardRepository{
     getCardsToday(deck_id:string): Promise<ApiResponse<CardDTO[]>>
     getCardsAlreadyStudied(deck_id:string): Promise<ApiResponse<CardDTO[]>>
     getCardsByDeckId(deck_id:string): Promise<ApiResponse<CardDTO[]>>
+    addImageCard(card_id:string, fileName:string,location:string,sort:number ): Promise<ApiResponse>
+    getImagesCard(card_id:string): Promise<ImgCardDTO[]>
 }  
