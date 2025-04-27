@@ -282,7 +282,7 @@ export class CardsDbSupabase implements ICardRepository {
                 return {
                     id:image.id,
                     card_id: image.card_id,
-                    file_name: image.name,
+                    file_name: image.file_name,
                     sort: image.sort,
                     location: image.location,
                     created_at: image.created_at, 

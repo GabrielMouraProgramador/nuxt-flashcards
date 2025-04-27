@@ -10,8 +10,8 @@ export const variables = ref<Variables>({
     flip:{
         rotate:false,
     },
-    imgFront:'',
-    imgBehind: '',
+    imgsFront:[],
+    imgsBehind: [],
     difficulty:{
         sheet: false,
         facil: "4d",
@@ -30,12 +30,7 @@ export const currentCard = computed(() => {
     if (variables.value.cards && variables.value.cards.length > 0 && variables.value.cards.length > variables.value.atual) {
         const current = variables.value.cards[variables.value.atual];
 
-        methods.getImageCard(current,'fileNameFront').then((urlImg:string) => {
-            variables.value.imgFront = urlImg
-        })
-        methods.getImageCard(current,"fileNameBehind").then((urlImg:string) => {
-            variables.value.imgBehind = urlImg
-        })
+        methods.getImageCard(current)
         
         const difficulty_times = getNextTime(
           current.difficulty,
@@ -141,17 +136,26 @@ export const methods  = {
         const router = useRouter()
         router.go(0);
     },
-    getImageCard: async(card:CardDTO,imgKey: 'fileNameBehind'| 'fileNameFront' ) => {
+    getImageCard: async(card:CardDTO) => {
 
         const repositoryStorage = useStorage()
     
-        if(!card || !card.deck_id ) return ''
-    
-        const { data } = await repositoryStorage.getUrlFile(card.deck_id || '', card[imgKey])
-    
-        if(data && data?.url) return data.url
+        if(!card || !card.id ) return ''
+        
+        variables.value.imgsBehind = []
+        variables.value.imgsFront = []
 
-        return ''
+        for (const img of card.images){
+            const { data } = await repositoryStorage.getUrlFile(card.id || '', img.file_name)
+
+            if( data?.url && img.location == 'front') {
+                variables.value.imgsFront.push(data.url)
+            }
+            if( data?.url && img.location == 'behind') {
+                variables.value.imgsBehind.push(data.url)
+            }
+        }
+
     }
 }
 interface difficulty {
@@ -169,8 +173,8 @@ interface Variables {
     cards: CardDTO[],
     next: boolean,
     atual: number,
-    imgFront:string,
-    imgBehind: string,
+    imgsFront:string[],
+    imgsBehind: string[],
     menuItem: MenuItem[],
     difficulty:{
         sheet: boolean,
@@ -184,4 +188,3 @@ interface Variables {
         rotate:boolean,
     },
 }
-  

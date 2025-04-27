@@ -4,8 +4,8 @@ import { variables, methods } from "@/scrips/study";
 const emit = defineEmits(["next"]);
 defineProps<{
   card: CardDTO;
-  imgFront: string;
-  imgBehind: string;
+  imgsFront: string;
+  imgsBehind: string;
 }>();
 </script>
 
@@ -17,14 +17,16 @@ defineProps<{
           <p class="mb-10">
             {{ card.front }}
           </p>
-          <v-img
-            v-if="imgFront"
-            :src="imgFront"
-            :max-width="800"
-            aspect-ratio="16/9"
-            cover
-            class="mx-auto img"
-          ></v-img>
+          <div>
+            <v-img
+              v-for="img in imgsFront"
+              :src="img"
+              :max-width="800"
+              aspect-ratio="16/9"
+              cover
+              class="mx-auto img"
+            ></v-img>
+          </div>
         </div>
       </VCard>
       <VCard rounded="xl" class="flip-card-back">
@@ -34,8 +36,9 @@ defineProps<{
           </p>
           <div>
             <v-img
-              v-if="imgBehind"
-              :src="imgBehind"
+              v-for="img in imgsBehind"
+              :src="img"
+              :max-width="800"
               aspect-ratio="16/9"
               cover
               class="mx-auto img"

@@ -76,10 +76,7 @@ export const methods  = {
         const repositotyCard = useCard()
         const repositoryStorage = useStorage()
 
-        const filefront = variables.value.front.file || null
-        const fileBehind = variables.value.behind.file || null
-
-        
+     
 
         await repositotyCard.updateCard(new Card({
             id: variables.value.card_id,

@@ -13,8 +13,8 @@ onMounted(() => {
     <VCard rounded="xl" class="pa-4 m-4 bg-card">
       <EstudarFlipCard
         :card="currentCard"
-        :imgFront="variables.imgFront"
-        :imgBehind="variables.imgBehind"
+        :imgsFront="variables.imgsFront"
+        :imgsBehind="variables.imgsBehind"
         class="mb-flip"
       />
       <EstudarDificuldade />
