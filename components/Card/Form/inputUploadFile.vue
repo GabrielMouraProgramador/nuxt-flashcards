@@ -1,15 +1,11 @@
 <template>
   <p class="mx-1 mt-2">{{ props.label }}</p>
-  <v-textarea
-    rows="3"
+  <QuillEditor
     v-model="inputText"
-    auto-grow
-    density="comfortable"
-    class="mb-4"
-    variant="solo-filled"
-    hide-details
-  >
-  </v-textarea>
+    v-model:content="inputText"
+    contentType="html"
+    theme="snow"
+  />
 
   <v-file-upload
     :class="['mt-4']"

@@ -7,6 +7,11 @@ onMounted(() => {
   const route = useRoute();
   methods.refresh(route.params.deck_id);
 });
+
+const removerTagsHTML = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || doc.body.innerText;
+};
 </script>
 
 <template>
@@ -22,13 +27,13 @@ onMounted(() => {
         <v-list-item v-for="card in searched" :title="card.front">
           <template v-slot:title>
             <p class="capitalize">
-              {{ card.front }}
+              {{ removerTagsHTML(card.front) }}
             </p>
           </template>
 
           <template v-slot:subtitle>
             <p class="capitalize" v-if="variablesCards.answers">
-              {{ card.behind }}
+              {{ removerTagsHTML(card.behind) }}
             </p>
             <p class="pb-4" v-else></p>
           </template>

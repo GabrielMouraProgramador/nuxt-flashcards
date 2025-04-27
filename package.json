@@ -15,8 +15,10 @@
     "@nuxtjs/supabase": "^1.4.6",
     "@supabase/gotrue-js": "^2.68.0",
     "@vitejs/plugin-vue": "^5.2.1",
+    "@vueup/vue-quill": "^1.2.0",
     "lucide-vue-next": "^0.474.0",
     "nuxt": "^3.15.4",
+    "quill": "^2.0.3",
     "sass": "^1.83.4",
     "vue": "latest",
     "vue-router": "latest"

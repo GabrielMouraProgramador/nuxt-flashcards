@@ -14,9 +14,13 @@ defineProps<{
     <div class="flip-card-inner" :class="{ rotated: variables.flip.rotate }">
       <VCard rounded="xl" class="flip-card-front">
         <div class="w-100 pa-4">
-          <p class="mb-10">
-            {{ card.front }}
-          </p>
+          <QuillEditor
+            v-model="card.front"
+            v-model:content="card.front"
+            theme="bubble"
+            contentType="html"
+          />
+
           <div class="img-grid">
             <v-img
               v-for="img in imgsFront"
@@ -31,9 +35,13 @@ defineProps<{
       </VCard>
       <VCard rounded="xl" class="flip-card-back">
         <div class="w-100 pa-4">
-          <p class="mb-10">
-            {{ card.behind }}
-          </p>
+          <QuillEditor
+            v-model="card.behind"
+            v-model:content="card.behind"
+            theme="bubble"
+            contentType="html"
+          />
+
           <div class="img-grid">
             <v-img
               v-for="img in imgsBehind"
