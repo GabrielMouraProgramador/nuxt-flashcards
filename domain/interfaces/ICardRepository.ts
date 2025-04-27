@@ -14,6 +14,9 @@ export interface CardDTO {
     front: string
     behind: string
     next_game: string
+
+    fileNameFront: string,
+    fileNameBehind: string
 }
 
 

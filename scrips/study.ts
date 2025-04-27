@@ -10,6 +10,8 @@ export const variables = ref<Variables>({
     flip:{
         rotate:false,
     },
+    imgFront:'',
+    imgBehind: '',
     difficulty:{
         sheet: false,
         facil: "4d",
@@ -28,6 +30,13 @@ export const currentCard = computed(() => {
     if (variables.value.cards && variables.value.cards.length > 0 && variables.value.cards.length > variables.value.atual) {
         const current = variables.value.cards[variables.value.atual];
 
+        methods.getImageCard(current,'fileNameFront').then((urlImg:string) => {
+            variables.value.imgFront = urlImg
+        })
+        methods.getImageCard(current,"fileNameBehind").then((urlImg:string) => {
+            variables.value.imgBehind = urlImg
+        })
+        
         const difficulty_times = getNextTime(
           current.difficulty,
           current.last_time,
@@ -43,6 +52,8 @@ export const currentCard = computed(() => {
       }
       return "";
 })
+
+
 export const methods  = {
     cardsToday: async (deck_id:string) => {
         variables.value.cards = useShuffle(await methodsCards.getCardsToday(deck_id))
@@ -130,6 +141,18 @@ export const methods  = {
         const router = useRouter()
         router.go(0);
     },
+    getImageCard: async(card:CardDTO,imgKey: 'fileNameBehind'| 'fileNameFront' ) => {
+
+        const repositoryStorage = useStorage()
+    
+        if(!card || !card.id ) return ''
+    
+        const { data } = await repositoryStorage.getUrlFile(card.id || '', card[imgKey])
+    
+        if(data && data?.url) return data.url
+
+        return ''
+    }
 }
 interface difficulty {
     level: string,
@@ -146,6 +169,8 @@ interface Variables {
     cards: CardDTO[],
     next: boolean,
     atual: number,
+    imgFront:string,
+    imgBehind: string,
     menuItem: MenuItem[],
     difficulty:{
         sheet: boolean,

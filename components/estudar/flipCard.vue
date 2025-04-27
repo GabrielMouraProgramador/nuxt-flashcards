@@ -2,24 +2,11 @@
 import type { CardDTO } from "~/domain/interfaces/ICardRepository";
 import { variables, methods } from "@/scrips/study";
 const emit = defineEmits(["next"]);
-const props = defineProps<{
+defineProps<{
   card: CardDTO;
+  imgFront: string;
+  imgBehind: string;
 }>();
-
-// watch: {
-//     async card(newCard) {
-//       const { getUrlFile } = useStorage();
-
-//       const { deck_id, imageFrente, imageTras } = newCard;
-
-//       getUrlFile(deck_id, imageTras).then((result) => {
-//         this.imageTras = result ? result : "";
-//       });
-//       getUrlFile(deck_id, imageFrente).then((result) => {
-//         this.imageFrente = result ? result : "";
-//       });
-//     },
-//   },
 </script>
 
 <template>
@@ -30,14 +17,14 @@ const props = defineProps<{
           <p class="mb-10">
             {{ card.front }}
           </p>
-          <!-- <v-img
-            v-if="imageFrente"
+          <v-img
+            v-if="imgFront"
+            :src="imgFront"
             :max-width="800"
             aspect-ratio="16/9"
             cover
-            :src="imageFrente"
             class="mx-auto img"
-          ></v-img> -->
+          ></v-img>
         </div>
       </VCard>
       <VCard rounded="xl" class="flip-card-back">
@@ -45,9 +32,15 @@ const props = defineProps<{
           <p class="mb-10">
             {{ card.behind }}
           </p>
-          <!-- <div>
-            <v-img v-if="imageTras" cover :src="imageTras" class="mx-auto img"></v-img>
-          </div> -->
+          <div>
+            <v-img
+              v-if="imgBehind"
+              :src="imgBehind"
+              aspect-ratio="16/9"
+              cover
+              class="mx-auto img"
+            ></v-img>
+          </div>
         </div>
       </VCard>
     </div>

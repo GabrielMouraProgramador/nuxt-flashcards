@@ -11,7 +11,7 @@ export class CardsDbSupabase implements ICardRepository {
   
     public async createCard(card: Card): Promise<ApiResponse<{ id: string }>> {
         try {
-            const { deck_id,front,behind,difficulty,next_game,last_time } = card.getValues()
+            const { deck_id,front,behind,difficulty,next_game,last_time,fileNameFront,fileNameBehind } = card.getValues()
             const { data, error } = await this.supabase
                 .from('cards') 
                 .insert([
@@ -22,6 +22,9 @@ export class CardsDbSupabase implements ICardRepository {
                         difficulty: difficulty,
                         next_game: next_game,
                         ultimo_tempo: last_time,
+                        imageFrente: fileNameFront,
+                        imageTras: fileNameBehind
+
                     }
                 ] as any).select()
 
@@ -30,10 +33,11 @@ export class CardsDbSupabase implements ICardRepository {
                 throw error; 
             }
 
-            const id = data[0]
+            const result = data[0]
 
+    
             return { 
-                data: { id },
+                data: result,
                 status: 200
             };
 
@@ -47,7 +51,7 @@ export class CardsDbSupabase implements ICardRepository {
     }
     public async updateCard(card: Card): Promise<ApiResponse> {
         try {
-            const { deck_id,front,behind,difficulty,next_game,last_time } = card.getValues()
+            const { deck_id,front,behind,difficulty,next_game,last_time,fileNameFront,fileNameBehind } = card.getValues()
             const {  error } = await this.supabase
                 .from('cards') 
                 .update({
@@ -57,6 +61,8 @@ export class CardsDbSupabase implements ICardRepository {
                     difficulty: difficulty,
                     next_game: next_game,
                     ultimo_tempo: last_time,
+                    imageFrente: fileNameFront,
+                    imageTras: fileNameBehind
                 } as never).eq('id', card.getCardId());
 
     
@@ -143,7 +149,9 @@ export class CardsDbSupabase implements ICardRepository {
                         deck_id: card.deck_id,
                         front: card.frete,
                         behind: card.tras,
-                        next_game: card.next_game
+                        next_game: card.next_game,
+                        fileNameFront: card.imageFrente,
+                        fileNameBehind: card.imageTras
                     }).getValues() as CardDTO
                 }),
                 status: 200
@@ -173,7 +181,9 @@ export class CardsDbSupabase implements ICardRepository {
                         deck_id: card.deck_id,
                         front: card.frete,
                         behind: card.tras,
-                        next_game: card.next_game
+                        next_game: card.next_game,
+                        fileNameFront: card.imageFrente,
+                        fileNameBehind: card.imageTras
                     }).getValues() as CardDTO
                 }),
                 status: 200
@@ -203,7 +213,9 @@ export class CardsDbSupabase implements ICardRepository {
                         deck_id: card.deck_id,
                         front: card.frete,
                         behind: card.tras,
-                        next_game: card.next_game
+                        next_game: card.next_game,
+                        fileNameFront: card.imageFrente,
+                        fileNameBehind: card.imageTras
                     }).getValues() as CardDTO
                 }),
                 status: 200

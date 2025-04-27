@@ -21,16 +21,34 @@ export const variables = ref<Variables>({
 export const methods  = {
     addCard: async (deck_id:string) => {
         const repositotyCard = useCard()
+        const repositoryStorage = useStorage()
 
-        await repositotyCard.createCard(new Card({
+        const filefront = variables.value.front.file || null
+        const fileBehind = variables.value.behind.file || null
+
+        const { data } = await repositotyCard.createCard(new Card({
             deck_id: deck_id,
             front: variables.value.front.text,
             behind: variables.value.behind.text,
+            fileNameFront: filefront?.name || '',
+            fileNameBehind: fileBehind?.name || '',
         }))
+        if(data && data.id){
+            const card_id = data.id
+            await repositoryStorage.createBucket(card_id)
+
+            if(filefront) await repositoryStorage.uploadFile(card_id, filefront)
+            if(fileBehind) await repositoryStorage.uploadFile(card_id, fileBehind)
+        }
+
         methods.refreshPage()
     },
     updateCard: async (deck_id:string) => {
         const repositotyCard = useCard()
+        const repositoryStorage = useStorage()
+
+        const filefront = variables.value.front.file || null
+        const fileBehind = variables.value.behind.file || null
 
         await repositotyCard.updateCard(new Card({
             id: variables.value.card_id,
@@ -38,6 +56,15 @@ export const methods  = {
             front: variables.value.front.text,
             behind: variables.value.behind.text,
         }))
+
+      
+        const card_id = variables.value.card_id
+        await repositoryStorage.createBucket(card_id)
+
+        if(filefront) await repositoryStorage.uploadFile(card_id, filefront)
+        if(fileBehind) await repositoryStorage.uploadFile(card_id, fileBehind)
+    
+
         methods.refreshPage()
     },
     activeMethod: async (deck_id:string) => {

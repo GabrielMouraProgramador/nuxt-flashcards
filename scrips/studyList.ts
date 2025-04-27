@@ -67,8 +67,6 @@ export const methods  = {
 
     refresh: async (deck_id:string) => {
         variables.value.loading = true;
-        const repositotyDeck = useDeck()
-        const repositotyCard = useCard()
         
         variables.value.info =  await methods.getInfoDeck(deck_id)
   

@@ -8,13 +8,17 @@ export class Card{
     private  next_game:string =  Card.generateTimestamp()
     private readonly last_time: string = '1d'
 
-    
+    fileNameFront: string = '';
+    fileNameBehind: string = '';
     constructor(data:{
         id?: string | null,
         created_at?: string,
         difficulty?: string,
         last_time?: string,
         next_game?: string
+
+        fileNameFront?: string,
+        fileNameBehind?: string
         
         deck_id: string,
         front: string,
@@ -34,6 +38,8 @@ export class Card{
         if(data.difficulty) this.difficulty = data.difficulty
         if(data.last_time) this.last_time = data.last_time
         if(data.created_at) this.created_at = data.created_at
+        if(data.fileNameFront) this.fileNameFront = data.fileNameFront
+        if(data.fileNameBehind) this.fileNameBehind = data.fileNameBehind
         if(data.next_game) this.next_game = data.next_game
 
     }
@@ -47,6 +53,8 @@ export class Card{
             difficulty: this.difficulty,
             next_game: this.next_game,
             last_time: this.last_time,
+            fileNameFront: this.fileNameFront,
+            fileNameBehind: this.fileNameBehind
         }
     }
     public getCardId(){

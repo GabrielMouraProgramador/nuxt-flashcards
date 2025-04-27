@@ -18,6 +18,7 @@ export class StorageSupabase implements IStorage{
     }
     async createBucket(uuid:string): Promise<ApiResponse>{
         try {
+            console.log(uuid)
             const { error } = await this.supabase.storage.createBucket(
             uuid,
                 {
