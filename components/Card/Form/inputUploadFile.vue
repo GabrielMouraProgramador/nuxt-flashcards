@@ -5,6 +5,7 @@
     v-model:content="inputText"
     contentType="html"
     theme="snow"
+    toolbar="full"
   />
 
   <v-file-upload
@@ -51,5 +52,12 @@ p {
 }
 :deep(.v-file-upload) {
   display: none;
+}
+.ql-picker-options-4,
+.ql-code-block,
+.ql-image,
+.ql-video,
+.ql-link {
+  display: none !important;
 }
 </style>

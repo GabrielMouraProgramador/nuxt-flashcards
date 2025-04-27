@@ -19,6 +19,7 @@ defineProps<{
             v-model:content="card.front"
             theme="bubble"
             contentType="html"
+            :readOnly="true"
           />
 
           <div class="img-grid">
@@ -40,6 +41,7 @@ defineProps<{
             v-model:content="card.behind"
             theme="bubble"
             contentType="html"
+            :readOnly="true"
           />
 
           <div class="img-grid">

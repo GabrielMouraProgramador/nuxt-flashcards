@@ -1,22 +1,6 @@
 <script setup>
 import { variables, methods } from "@/scrips/formCard";
-const tab = ref("");
-
-const content = ref(
-  "<p>dsadasdasdasdsadasdasd</p><p>das</p><p>dass</p><h1>asds</h1><p>asd</p>"
-);
-
-function enviar() {
-  // Converte o conteúdo delta para HTML
-  const htmlContent = content.value;
-
-  // Exibe o HTML no console
-  console.log(htmlContent);
-
-  // Caso queira manipular o texto simples (sem HTML):
-  const plainText = content.value.ops.map((op) => op.insert).join("");
-  console.log("Texto simples:", plainText);
-}
+const tab = ref("CREATE");
 </script>
 
 <template>

@@ -5,6 +5,7 @@
     v-model:content="inputText"
     contentType="html"
     theme="snow"
+    toolbar="full"
   />
 
   <v-file-upload
@@ -18,7 +19,6 @@
 </template>
 <script setup>
 import { VFileUpload } from "vuetify/labs/VFileUpload";
-import { variables } from "@/scrips/formCard";
 import { computed } from "vue";
 
 const props = defineProps({
@@ -46,14 +46,18 @@ const inputFile = computed({
 });
 </script>
 
-<style scoped>
+<style>
 p {
   font-size: 12px;
 }
 :deep(.v-file-upload) {
   display: none;
 }
-.v-file-upload--density-compact {
+.ql-picker-options-4,
+.ql-code-block,
+.ql-image,
+.ql-video,
+.ql-link {
   display: none !important;
 }
 </style>
