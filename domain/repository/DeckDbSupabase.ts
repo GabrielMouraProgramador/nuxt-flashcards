@@ -24,10 +24,10 @@ export class DeckDbSupabase implements IDeckRepository {
                 throw error; 
             }
 
-            const id = data[0]
+            const result = data[0]
 
             return { 
-                data: { id },
+                data: result,
                 status: 200
             };
 

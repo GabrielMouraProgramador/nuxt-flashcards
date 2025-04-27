@@ -33,13 +33,11 @@ export const methods  = {
             fileNameFront: filefront?.name || '',
             fileNameBehind: fileBehind?.name || '',
         }))
-        if(data && data.id){
-            const card_id = data.id
-            await repositoryStorage.createBucket(card_id)
-
-            if(filefront) await repositoryStorage.uploadFile(card_id, filefront)
-            if(fileBehind) await repositoryStorage.uploadFile(card_id, fileBehind)
-        }
+  
+    
+        if(filefront) await repositoryStorage.uploadFile(deck_id, filefront)
+        if(fileBehind) await repositoryStorage.uploadFile(deck_id, fileBehind)
+    
 
         methods.refreshPage()
     },
@@ -58,11 +56,9 @@ export const methods  = {
         }))
 
       
-        const card_id = variables.value.card_id
-        await repositoryStorage.createBucket(card_id)
 
-        if(filefront) await repositoryStorage.uploadFile(card_id, filefront)
-        if(fileBehind) await repositoryStorage.uploadFile(card_id, fileBehind)
+        if(filefront) await repositoryStorage.uploadFile(deck_id, filefront)
+        if(fileBehind) await repositoryStorage.uploadFile(deck_id, fileBehind)
     
 
         methods.refreshPage()
@@ -103,6 +99,26 @@ export const methods  = {
         const router = useRouter()
         router.go(0);
     },
+    urlToFile: async (url:string) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        
+        // Tenta extrair o tipo MIME
+        const contentType = response.headers.get('content-type') || 'application/octet-stream';
+        
+        // Gera um nome baseado na URL
+        const urlParts = url.split('/');
+        let filename = urlParts[urlParts.length - 1].split('?')[0]; // Remove parâmetros da URL
+        
+        // Se não tiver nome, gera um aleatório
+        if (!filename || !filename.includes('.')) {
+            const extension = contentType.split('/')[1] || 'bin';
+            filename = `file_${Date.now()}.${extension}`;
+        }
+        
+        return new File([blob], filename, { type: contentType });
+    }
+      
 }
 
 watch(

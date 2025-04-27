@@ -145,9 +145,9 @@ export const methods  = {
 
         const repositoryStorage = useStorage()
     
-        if(!card || !card.id ) return ''
+        if(!card || !card.deck_id ) return ''
     
-        const { data } = await repositoryStorage.getUrlFile(card.id || '', card[imgKey])
+        const { data } = await repositoryStorage.getUrlFile(card.deck_id || '', card[imgKey])
     
         if(data && data?.url) return data.url
 
