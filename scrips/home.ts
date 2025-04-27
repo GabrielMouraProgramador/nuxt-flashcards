@@ -25,10 +25,9 @@ export const methods  = {
         const { data } = await repositotyDeck.createDeck(new Deck({
             name: variables.value.newDeck.name
         }))
-
-        if(data?.id) await repositoryStorage.createBucket(data.id)
             
         await methods.allDecks()
+        
         variables.value.newDeck.loading = false
         variables.value.showNewDeck = false
         variables.value.newDeck.name = ''

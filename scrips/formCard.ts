@@ -33,10 +33,13 @@ export const methods  = {
             fileNameFront: filefront?.name || '',
             fileNameBehind: fileBehind?.name || '',
         }))
-  
-    
-        if(filefront) await repositoryStorage.uploadFile(deck_id, filefront)
-        if(fileBehind) await repositoryStorage.uploadFile(deck_id, fileBehind)
+        
+        if(data && data?.id){
+            await repositoryStorage.createBucket(data.id)
+            
+            if(filefront) await repositoryStorage.uploadFile(data.id, filefront)
+            if(fileBehind) await repositoryStorage.uploadFile(data.id, fileBehind)
+        }
     
 
         methods.refreshPage()
@@ -48,6 +51,8 @@ export const methods  = {
         const filefront = variables.value.front.file || null
         const fileBehind = variables.value.behind.file || null
 
+        
+
         await repositotyCard.updateCard(new Card({
             id: variables.value.card_id,
             deck_id: deck_id,
@@ -55,10 +60,26 @@ export const methods  = {
             behind: variables.value.behind.text,
         }))
 
-      
-
-        if(filefront) await repositoryStorage.uploadFile(deck_id, filefront)
-        if(fileBehind) await repositoryStorage.uploadFile(deck_id, fileBehind)
+        if(filefront && filefront?.name ){
+            await repositoryStorage.uploadFile(variables.value.card_id, filefront)
+            await repositotyCard.updateCard(new Card({
+                id: variables.value.card_id,
+                deck_id: deck_id,
+                front: variables.value.front.text,
+                behind: variables.value.behind.text,
+                fileNameFront: filefront.name,
+            }))
+        }
+        if(fileBehind && fileBehind?.name){
+            await repositoryStorage.uploadFile(variables.value.card_id, fileBehind)
+            await repositotyCard.updateCard(new Card({
+                id: variables.value.card_id,
+                deck_id: deck_id,
+                front: variables.value.front.text,
+                behind: variables.value.behind.text,
+                fileNameBehind: fileBehind.name,
+            }))
+        } 
     
 
         methods.refreshPage()
@@ -68,7 +89,6 @@ export const methods  = {
         if(variables.value.typeAction === 'EDIT') await methods.updateCard(deck_id)
     },
     showForm:(action: 'CREATE'| 'EDIT', card?:CardDTO) => {
-        console.log(card)
         variables.value.typeAction = action === "EDIT" ? "EDIT" : "CREATE";
         variables.value.showDialog = true
         if(variables.value.typeAction === 'EDIT' && card  && card.id){
