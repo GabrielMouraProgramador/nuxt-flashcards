@@ -1,6 +1,5 @@
 <script setup>
 import { variables, methods } from "@/scrips/formCard";
-const tab = ref("CREATE");
 </script>
 
 <template>
@@ -16,11 +15,11 @@ const tab = ref("CREATE");
         <v-spacer></v-spacer>
       </v-toolbar>
       <div class="pa-4">
-        <v-tabs v-model="tab" align-tabs="center" color="primary">
+        <v-tabs v-model="variables.tab" align-tabs="center" color="primary">
           <v-tab value="frente">Frente</v-tab>
           <v-tab value="tras">Atras</v-tab>
         </v-tabs>
-        <v-tabs-window v-model="tab">
+        <v-tabs-window v-model="variables.tab">
           <v-tabs-window-item value="frente">
             <v-container fluid>
               <CardFormInputUploadFile

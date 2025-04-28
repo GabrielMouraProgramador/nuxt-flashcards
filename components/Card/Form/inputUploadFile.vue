@@ -1,13 +1,12 @@
 <template>
   <p class="mx-1 mt-2">{{ props.label }}</p>
   <QuillEditor
-    v-model="inputText"
     v-model:content="inputText"
     contentType="html"
     theme="snow"
     toolbar="full"
+    ref="editor"
   />
-
   <v-file-upload
     :class="['mt-4']"
     v-model="inputFile"
@@ -21,6 +20,8 @@
 import { VFileUpload } from "vuetify/labs/VFileUpload";
 import { computed } from "vue";
 
+const emit = defineEmits(["update:modelValue"]);
+const editor = ref(null);
 const props = defineProps({
   modelValue: {
     text: String,
@@ -28,12 +29,13 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
-const inputFileHandler = useTemplateRef("input-file-handler");
-
 const inputText = computed({
-  get: () => props.modelValue.text,
-  set: (text) => emit("update:modelValue", { text: text, file: props.modelValue.file }),
+  get() {
+    return props.modelValue.text;
+  },
+  set(text) {
+    emit("update:modelValue", { text, file: props.modelValue.file });
+  },
 });
 
 const inputFile = computed({
@@ -52,12 +54,5 @@ p {
 }
 :deep(.v-file-upload) {
   display: none;
-}
-.ql-picker-options-4,
-.ql-code-block,
-.ql-image,
-.ql-video,
-.ql-link {
-  display: none !important;
 }
 </style>

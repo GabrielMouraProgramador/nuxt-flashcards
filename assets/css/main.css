@@ -1,0 +1,51 @@
+
+
+/* SCROLL BAR */
+/* Firefox */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #000000 #DFE9EB;
+    font-family: 'Inter';
+  }
+  
+  /* Chrome, Edge and Safari */
+  *::-webkit-scrollbar {
+    width: 7px;
+    width: 7px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: #DFE9EB;
+  }
+  
+  *::-webkit-scrollbar-track:hover {
+    background-color: #DFE9EB;
+  }
+  
+  *::-webkit-scrollbar-track:active {
+    background-color: #DFE9EB;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+    background-color: #0085FF;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #000000;
+  }
+  
+  *::-webkit-scrollbar-thumb:active {
+    background-color: #000000;
+  }
+  .ql-picker-options-4,
+.ql-code-block,
+.ql-image,
+.ql-video,
+.ql-link {
+  display: none !important;
+}
+
+.ql-container  p, .ql-container li {
+  font-size: 18px;
+}

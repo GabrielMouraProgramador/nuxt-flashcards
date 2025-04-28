@@ -6,6 +6,10 @@ const emit = defineEmits(["delete"]);
 const handleDelete = () => {
   methods.deleteItem(emit);
 };
+const removerTagsHTML = (html) => {
+  const doc = new DOMParser().parseFromString(html, "text/html");
+  return doc.body.textContent || doc.body.innerText;
+};
 </script>
 
 <template>
@@ -17,7 +21,7 @@ const handleDelete = () => {
 
       <VCardText>
         <p>
-          <b>{{ variables.text }}</b
+          <b class="limitar-texto">{{ removerTagsHTML(variables.text) }}</b
           ><br />
           Os dados excluídos serão apagados permanentemente.
         </p>
@@ -48,3 +52,12 @@ const handleDelete = () => {
     </v-card>
   </v-bottom-sheet>
 </template>
+<style scoped>
+.limitar-texto {
+  display: inline-block;
+  max-width: 350px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>

@@ -1,19 +1,22 @@
 import { Card } from "~/domain/entities/Card"
 import type { CardDTO } from "~/domain/interfaces/ICardRepository"
+import { methods as methodsCard } from "@/scrips/studyList";
+
 
 export const variables = ref<Variables>({
     showDialog: false,
     typeAction:'CREATE',
     card_id:'',
     front: {
-        text: "",
+        text: "<p><br></p><p><br></p><p><br></p>",
         file: [],
     },
     behind:{
-        text: "",
+        text: "<p><br></p><p><br></p><p><br></p>",
         file: [],
     },
     loading: false,
+    tab: 'frente',
 })
 
 
@@ -71,9 +74,11 @@ export const methods  = {
         
 
 
-        methods.cleanForm()
+        methods.cleanForm() 
+        methodsCard.refresh(deck_id);
         variables.value.showDialog = true
         variables.value.loading = false
+        
     },
     updateCard: async (deck_id:string) => {
         variables.value.loading = true
@@ -127,13 +132,14 @@ export const methods  = {
         variables.value.typeAction = 'CREATE',
         variables.value.card_id = ''
         variables.value.front = {
-            text: "",
+            text: "<p><br></p><p><br></p><p><br></p>",
             file: [],
         }
         variables.value.behind = {
-            text: "",
+            text: "<p><br></p><p><br></p><p><br></p>",
             file: [],
         }
+        variables.value.tab = 'frente'
     },
     
     refreshPage: () => {
@@ -170,7 +176,7 @@ export const methods  = {
             
             const imgsBehind = []
             const imgsFront = []
-        console.log('[IMGS]',card.images )
+
             for (const img of card.images){
                 const { data } = await repositoryStorage.getUrlFile(card.id || '', img.file_name)
     
@@ -214,5 +220,6 @@ interface Variables {
         file: File[],
     },
     loading: boolean,
+    tab:string,
 }
   
