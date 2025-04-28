@@ -5,23 +5,27 @@
     contentType="html"
     theme="snow"
     toolbar="full"
-    ref="editor"
   />
-  <v-file-upload
-    :class="['mt-4']"
-    v-model="inputFile"
-    multiple
-    type="file"
-    density="compact"
-    variant="compact"
-  ></v-file-upload>
+  <div class="pb-5">
+    <v-file-upload
+      :id="variables.typeAction === 'EDIT' ? 'edit-v-file-upload' : 'add'"
+      :class="['mt-4']"
+      v-model="inputFile"
+      multiple
+      type="file"
+      density="compact"
+      variant="compact"
+    ></v-file-upload>
+  </div>
 </template>
 <script setup>
+import { variables } from "@/scrips/formCard";
+
 import { VFileUpload } from "vuetify/labs/VFileUpload";
 import { computed } from "vue";
 
 const emit = defineEmits(["update:modelValue"]);
-const editor = ref(null);
+
 const props = defineProps({
   modelValue: {
     text: String,

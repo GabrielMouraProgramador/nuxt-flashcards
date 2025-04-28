@@ -1,4 +1,5 @@
 <script setup>
+import { CardFormInputFile } from "#components";
 import { variables, methods } from "@/scrips/formCard";
 </script>
 
@@ -22,30 +23,12 @@ import { variables, methods } from "@/scrips/formCard";
         <v-tabs-window v-model="variables.tab">
           <v-tabs-window-item value="frente">
             <v-container fluid>
-              <CardFormInputUploadFile
-                v-if="variables.typeAction === 'CREATE'"
-                label="Parte da frente"
-                v-model="variables.front"
-              />
-              <CardFormInputShowFile
-                v-if="variables.typeAction === 'EDIT'"
-                label="Parte da frente"
-                v-model="variables.front"
-              />
+              <CardFormInputFile label="Parte da frente" v-model="variables.front" />
             </v-container>
           </v-tabs-window-item>
           <v-tabs-window-item value="tras">
             <v-container fluid>
-              <CardFormInputUploadFile
-                v-if="variables.typeAction === 'CREATE'"
-                label="Parte de trás"
-                v-model="variables.behind"
-              />
-              <CardFormInputShowFile
-                v-if="variables.typeAction === 'EDIT'"
-                label="Parte da frente"
-                v-model="variables.behind"
-              />
+              <CardFormInputFile label="Parte de trás" v-model="variables.behind" />
             </v-container>
           </v-tabs-window-item>
         </v-tabs-window>

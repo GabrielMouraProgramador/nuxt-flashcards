@@ -49,3 +49,6 @@
 .ql-container  p, .ql-container li {
   font-size: 18px;
 }
+#edit-v-file-upload {
+  display: none  !important;
+}

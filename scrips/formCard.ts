@@ -91,8 +91,10 @@ export const methods  = {
             behind: variables.value.behind.text,
         }))
     
-        methods.refreshPage()
+        methods.cleanForm() 
+        methodsCard.refresh(deck_id);
         variables.value.loading = false
+        variables.value.showDialog = false
     },
     activeMethod: async (deck_id:string) => {
         if(variables.value.typeAction === 'CREATE') await  methods.addCard(deck_id)
