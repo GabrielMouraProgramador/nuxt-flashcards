@@ -54,6 +54,9 @@ export const methods  = {
     cardsToday: async (deck_id:string) => {
         variables.value.cards = useShuffle(await methodsCards.getCardsToday(deck_id))
     },
+    allCards: async (deck_id:string) => {
+        variables.value.cards = useShuffle(await methodsCards.getCardsDeck(deck_id))
+    },
     flip: () => {
         variables.value.flip.rotate = !variables.value.flip.rotate;
         variables.value.difficulty.sheet = true;

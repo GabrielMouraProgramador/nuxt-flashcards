@@ -17,7 +17,7 @@ export const variables = ref<Variables>({
       { text: "Novo Card", icon: "mdi-plus", event: 'newCard'},
       { text: "Renomear", icon: "mdi-rename", event: 'renameDeck' },
       { text: "Apagar", icon: "mdi-delete", event: 'deleteDeck' },
-    //   { text: "Estudar Todos", icon: "mdi-account-school", event: 'goAllCards' },
+      { text: "Estudar Todos", icon: "mdi-account-school", event: 'goAllCards' },
     ],
 })
 export const notStudied = computed(() => 

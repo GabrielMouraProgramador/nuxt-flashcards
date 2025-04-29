@@ -1,10 +1,14 @@
 <script setup>
 import { variables, methods, currentCard } from "@/scrips/study";
 
+const route = useRoute();
 onMounted(() => {
   methods.resetData();
-  const route = useRoute();
-  methods.cardsToday(route.params.deck_id);
+  if (route?.query?.studymode == "allcards") {
+    methods.allCards(route.params.deck_id);
+  } else {
+    methods.cardsToday(route.params.deck_id);
+  }
 });
 </script>
 

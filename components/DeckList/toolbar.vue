@@ -11,6 +11,7 @@
         @newCard="methodsNewCard.showForm('CREATE')"
         @renameDeck="variablesRenameDeck.showDialog = true"
         @deleteDeck="methods.confirmDeleteDeck()"
+        @goAllCards="$router.push(`/estudar/${$route.params.deck_id}?studymode=allcards`)"
         :menu_items="variables.menuDeck"
       />
     </v-toolbar-items>
