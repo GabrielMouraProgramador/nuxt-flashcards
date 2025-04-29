@@ -14,7 +14,14 @@ import { CircleX } from "lucide-vue-next";
           </v-icon>
         </p>
       </div>
-      <v-carousel v-model="selectedIndex" hide-delimiters cycle class="Carousel" s>
+      <v-carousel
+        v-model="selectedIndex"
+        hide-delimiters
+        :show-arrows="false"
+        cycle
+        class="Carousel"
+        s
+      >
         <v-carousel-item v-for="(image, index) in images" :key="index">
           <v-img :src="image" class="zoomable-img my-auto" />
         </v-carousel-item>
