@@ -91,12 +91,6 @@ import { variables, methods } from "@/scrips/study";
   </v-bottom-sheet>
 </template>
 
-<style>
-#estudar-deck_id .v-overlay__scrim,
-#estudar-all-cards-deck_id .v-overlay__scrim {
-  background: transparent !important; /* Remove o fundo escuro */
-}
-</style>
 <style scoped>
 .card {
   background: #282725;
