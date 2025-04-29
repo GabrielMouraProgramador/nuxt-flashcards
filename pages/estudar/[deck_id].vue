@@ -22,6 +22,10 @@ onMounted(() => {
         :imgsBehind="variables.imgsBehind"
         class="mb-flip"
       />
+      <EstudarShowImages
+        :title="!variables.flip.rotate ? 'IMAGENS DA FRENTE' : 'IMAGENS DE TRAS'"
+        :images="!variables.flip.rotate ? variables.imgsFront : variables.imgsBehind"
+      />
       <EstudarDificuldade />
       <EstudarActions />
     </VCard>

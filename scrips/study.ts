@@ -25,6 +25,8 @@ export const variables = ref<Variables>({
       { text: "Apagar", icon: "mdi-delete", event:'Delete' },
     ],
     loading:false,
+    clickTimeout: null,
+    showBigImagen:false,
 })
 
 export const currentCard = computed(() => {
@@ -160,6 +162,23 @@ export const methods  = {
             }
         }
 
+    },
+    handleClick:() => {
+        if (variables.value.clickTimeout) return;
+
+        variables.value.clickTimeout = setTimeout(() => {
+            variables.value.clickTimeout = null;
+            methods.flip()
+        }, 250);
+    },
+    handleDoubleClick:() => {
+        if ( variables.value.clickTimeout) {
+            clearTimeout(variables.value.clickTimeout);
+            variables.value.clickTimeout = null;
+        }
+        variables.value.showBigImagen = true
+        variables.value.difficulty.sheet = false
+    
     }
 }
 interface difficulty {
@@ -192,4 +211,6 @@ interface Variables {
         rotate:boolean,
     },
     loading:boolean,
+    showBigImagen:boolean,
+    clickTimeout:any
 }

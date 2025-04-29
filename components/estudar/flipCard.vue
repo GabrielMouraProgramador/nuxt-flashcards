@@ -10,7 +10,11 @@ defineProps<{
 </script>
 
 <template>
-  <div class="flip-card" @click="methods.flip()">
+  <div
+    class="flip-card"
+    @click="methods.handleClick"
+    @dblclick="methods.handleDoubleClick"
+  >
     <div class="flip-card-inner" :class="{ rotated: variables.flip.rotate }">
       <VCard rounded="xl" class="flip-card-front">
         <div class="w-100 pa-4">
